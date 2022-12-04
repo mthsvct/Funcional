@@ -2,10 +2,23 @@
 potencia (base, exp) | exp > 1 = base * potencia(base, exp-1)
                 | otherwise = base
 
+
+
+{- 
+        base = 2
+        exp = 1
+
+        = 8
+-}
+
 f1(x) = potencia(x, 2) + 3 * x - 5 * x
 
 -- Letra B: f2(x,y) = 2x3 - 3xy  + 10y
 f2(x, y) = 2*potencia(x, 3) - 3*x*y + 10*y
+
+{-
+        Comentário com várias linhas.
+-}
 
 -- Letra C: f3(x,y,z) = 3xy + 2xz - 3yz
 f3(x, y, z) = 3 * x * z + 2 * x * z - 3 * y * z
