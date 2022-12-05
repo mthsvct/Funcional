@@ -1,7 +1,6 @@
 ehTriangulo(a, b, c) | (a + b > c) && (b + c > a) && (a + c > b) = True
                 | otherwise = False
 
--- ehEscaleno(a, b, c) | (a /= b) && (b /= c) && (a /= c) = True
 
 calcula(a, b, c) = do
         let p = (a + b + c)
@@ -15,8 +14,8 @@ area(a,b,c) | ehTriangulo(a, b, c) = calcula(a, b, c)
 
 main = do
         {- 
-            area(2, 3, 4) = Eh triangulo e retorna um valor
-            area(1, 2, 3) = Nao eh triangulo e nao retorna nada
+            area(2, 3, 4) = Eh triangulo e retorna um valor :)
+            area(1, 2, 3) = Nao eh triangulo e nao retorna nada :(
         -}
         putStrLn "Hello!"
 
