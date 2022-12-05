@@ -1,7 +1,6 @@
 ehTriangulo(a, b, c) | (a + b > c) && (b + c > a) && (a + c > b) = True
                 | otherwise = False
 
-
 calcula(a, b, c) = do
         let p = (a + b + c)
         let s = p / 2
