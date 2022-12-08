@@ -1,7 +1,7 @@
-buscaErro(a, b, c) | (a + b < c) = 1
-                | (b + c < a) = 2
-                | (a + c < b) = 3
-                | otherwise = 0
+buscaErro(a, b, c) | (a + b < c) = "C"
+                | (b + c < a) = "A"
+                | (a + c < b) = "B"
+                | otherwise = "X"
 
 
 buscaLado(x) | x == 1 = "C"
@@ -10,13 +10,13 @@ buscaLado(x) | x == 1 = "C"
             | otherwise = "X"
 
 
+apresenta(x) | x == "X" = "Eh triangulo"
+            | otherwise = "Nao eh triangulo.\nO lado " ++ x ++ " eh maior que a soma dos outros dois lados."
+
+
 ehTriangulo(a, b, c) = do
-                let x = buscaErro(a, b, c)
-                if x == 0
-                    then putStrLn "Eh triangulo"
-                    else do
-                        let lado = buscaLado(x)
-                        putStrLn("Nao eh triangulo. O lado " ++ lado ++ " eh maior que a soma dos outros dois lados. ")
+            let x = buscaErro(a, b, c)
+            putStrLn(apresenta(x))
 
 
 main = do
