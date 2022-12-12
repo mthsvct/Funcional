@@ -20,3 +20,7 @@ atvs/atv2/q3.o
 atvs/atv3/q1
 atvs/atv3/q1.hi
 atvs/atv3/q1.o
+atvs/atv2/q4
+atvs/atv2/q4.hi
+.gitignore
+atvs/atv2/q4.o
