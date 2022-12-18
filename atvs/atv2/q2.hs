@@ -1,7 +1,8 @@
 media(a, b, c) = (a + b + c) / 3
 
-ehIgual(x, m) | x == m = 1
-            | otherwise = 0
+ehIgual(x, m) 
+        | x == m = 1
+        | otherwise = 0
 
 calcula(a, b, c) = do
             let m = media(a, b, c)

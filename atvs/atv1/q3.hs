@@ -1,5 +1,6 @@
 -- Letra A: Faça uma função que devolva o valor de x.
-buscaValor(x) | ( 2 * x + 5 ) + (x + 10) == 180 = x
+buscaValor(x) 
+        | ( 2 * x + 5 ) + (x + 10) == 180 = x
         | otherwise = buscaValor(x+1) 
 
 -- Letra B: Faça uma função que devolva o valor dos dois ângulos.
