@@ -14,7 +14,7 @@ ultimo x = last x
 resto x = tail x
 
 -- Retorna a lista sem o último elemento
-init x = init x
+inicio x = init x
 
 -- Retorna o elemento na posição n
 elemento n x = x !! n
@@ -29,7 +29,7 @@ adiciona x y = x ++ y
 adicionaInicio x y = x : y
 
 -- Retorna a lista sem o elemento x
-remove x y = y \\ x
+remove x y = filter (/= x) y
 
 -- Retorna a lista sem o elemento na posição n
 removePos n x = take n x ++ drop (n+1) x

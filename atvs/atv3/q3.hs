@@ -13,5 +13,6 @@ mmc(a, b)
         | a > b = mmc(b, a)
         | otherwise = apresenta(a, b, calcula(a, b, b))
 
+
 main = do
         putStrLn "Hello World!"
