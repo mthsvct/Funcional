@@ -12,6 +12,12 @@ somaMult3(c:r, soma)
         | mod c 3 == 0 = somaMult3(r, soma + c)
         | otherwise = somaMult3(r, soma)
 
+-- Com pendencia
+somaMult3P([]) = 0
+somaMult3P(c:r)
+        | mod c 3 == 0 = c + somaMult3P(r)
+        | otherwise = somaMult3P(r)
+
 geraLista(i, limite)
         | i < limite = i : geraLista(i+1, limite)
         | otherwise = []
