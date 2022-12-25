@@ -8,9 +8,9 @@ apresenta(a, b, c, d, m)
         | otherwise = do
                 putStr("O MMC de ")
                 putStr(show(a))
-                putStr(" e ")
+                putStr(", ")
                 putStr(show(b))
-                putStr(" e ")
+                putStr(", ")
                 putStr(show(c))
                 putStr(" e ")
                 putStr(show(d))
@@ -18,7 +18,11 @@ apresenta(a, b, c, d, m)
                 putStrLn(show(m))
 
 mmc :: (Int, Int, Int, Int) -> IO ()
-mmc(a, b, c, d) = apresenta(a, b, c, d, calcula(a, b, c, d, d+1))
+mmc(a, b, c, d) 
+        | a < b = mmc(b, a, c, d)
+        | b < c = mmc(a, c, b, d)
+        | c < d = mmc(a, b, d, c)
+        | otherwise = apresenta(a, b, c, d, calcula(a, b, c, d, d+1))
 
 -- Falta fazer a troca.
 
