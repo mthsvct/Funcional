@@ -1,3 +1,4 @@
+module Q1_atv5 where
 
 -- Função que ler um numero inteiro e insere na lista
 lerItem(lista) = do 
@@ -38,6 +39,11 @@ prodImpares(lista, i, tamanho)
         | mod i 2 /= 0 = (lista !! i) * prodImpares(lista, i+1, tamanho)
         | otherwise = 1 * prodImpares(lista, i+1, tamanho)
 
+-- F) Função que devolve o somatório dos múltiplos de 5 da Lista.
+somatorioMult5([]) = 0
+somatorioMult5(c:r)
+        | mod c 5 == 0 = c + somatorioMult5(r)
+        | otherwise = somatorioMult5(r)
 
 -- -------------------------------------------------- --
 
@@ -51,6 +57,7 @@ menu = do
         putStrLn "5 - Maior item da lista"
         putStrLn "6 - Multiplos de 3"
         putStrLn "7 - Produto dos itens dos indices impares"
+        putStrLn "8 - Somatório dos múltiplos de 5 da Lista"
         putStr "Digite a opcao desejada: "
         opcao <- getLine
         return (read opcao :: Int)
@@ -82,6 +89,10 @@ direcionaFuncoes(op, lista)
         | op == 7 = do
                 putStr "O produto dos itens dos indices impares eh igual a: "
                 putStrLn (show (prodImpares(lista, 0, length lista)))
+                opcoes(lista)
+        | op == 8 = do
+                putStr "O somatorio dos itens multiplos de 5 eh igual a: "
+                putStrLn (show (somatorioMult5(lista)))
                 opcoes(lista)
         
 opcoes(lista) = do
