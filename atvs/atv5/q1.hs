@@ -51,7 +51,6 @@ menu = do
         putStrLn "5 - Maior item da lista"
         putStrLn "6 - Multiplos de 3"
         putStrLn "7 - Produto dos itens dos indices impares"
-
         putStr "Digite a opcao desejada: "
         opcao <- getLine
         return (read opcao :: Int)
@@ -87,6 +86,7 @@ direcionaFuncoes(op, lista)
         
 opcoes(lista) = do
         op <- menu
+        putStr "\n"
         direcionaFuncoes(op, lista)
 
 main = do
