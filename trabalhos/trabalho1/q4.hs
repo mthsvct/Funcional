@@ -2,6 +2,17 @@ module Q4_trab1 where
 
 import Data.Char
 
+-- a) uma função para contar o número de caracteres que cada string possui sem repetir;
+foiLido(caractere, []) = False
+foiLido(caractere, c:r)
+        | caractere == c = True
+        | otherwise = foiLido(caractere, r)
+
+qntSemRepetir([], lidos) = 0
+qntSemRepetir(c:r, lidos)
+        | foiLido(c, lidos) = qntSemRepetir(r, lidos)
+        | otherwise = 1 + qntSemRepetir(r, lidos ++ [c])
+
 -- lista de strings
 listaStr([]) = putStrLn " "
 listaStr(c:r) = do
