@@ -19,6 +19,29 @@ listaStr(c:r) = do
         putStrLn c
         listaStr(r)
 
+{- 
+        B) uma  função  que  devolve  uma  lista  contendo  os  tipos  de  
+        caracteres  que  iniciam  as  strings  da  lista,  por exemplo: 
+        vogal, dígito ou outro tipo de carácter e se o mesmo é ou 
+        não maiúsculo, quando possível. -}
+tipoCar(c)
+        | isSpace(c) = "espaço"
+        | isPunctuation(c) = "pontuação"
+        | ehVogal(c) == 1 = "vogal"
+        | ehVogal(c) == 0 = "consoante"
+        | isUpper(c) = "maiuscula"
+        | isLower(c) = "minuscula"
+        | otherwise = "outro"
+
+tipo(c:r) 
+        | isDigit(c) = "digito"
+        | otherwise = tipoCar(c)
+
+tipos([]) = []
+tipos(c:r) = tipo(c) : tipos(r)
+
+
+
 -- Função que devolve 1 se o caractere c for vogal e 0 caso contrário
 ehVogal(c) 
         | c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' = 1
