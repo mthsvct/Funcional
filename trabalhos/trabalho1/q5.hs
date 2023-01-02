@@ -1,11 +1,37 @@
 module Q5_trab1 where
 
+{- 
+        A) uma função que devolva uma 
+        lista contendo a união ordenada 
+        entre (A – B) e (B – A).
+-}
+
+
+
 -- QuickSort em Haskell
 quickSort(lista)
         | null lista == True = []
         | otherwise = quickSort [y | y <- tail lista, y <= head lista] 
                                 ++ [head lista] 
                                 ++ quickSort [y | y <- tail lista, y > head lista]
+
+
+
+-- Função que devolve x lista com os elementos de a que não estão em y
+esta(x, []) = False
+esta(x, y:lista)
+        | x == y = True
+        | otherwise = esta(x, lista)
+
+une([], y) = []
+une(x:lista, y)
+        | esta(x, y) == True = une(lista, y)
+        | otherwise = x : une(lista, y)
+    
+calcula(a, b) = quickSort(une(a, b) ++ une(b, a))
+
+uniao(a, b) = calcula(quickSort(a), quickSort(b))
+
 
 {-
         B - uma função que devolva uma lista contendo a 

@@ -1,6 +1,6 @@
 module Q4_trab1 where
-
 import Data.Char
+
 
 -- a) uma função para contar o número de caracteres que cada string possui sem repetir;
 foiLido(caractere, []) = False
@@ -19,6 +19,7 @@ listaStr(c:r) = do
         putStrLn c
         listaStr(r)
 
+
 {- 
         B) uma  função  que  devolve  uma  lista  contendo  os  tipos  de  
         caracteres  que  iniciam  as  strings  da  lista,  por exemplo: 
@@ -26,7 +27,7 @@ listaStr(c:r) = do
         não maiúsculo, quando possível. -}
 tipoCar(c)
         | isSpace(c) = "espaço"
-        | isPunctuation(c) = "pontuação"
+        | isPunctuation(c) = "pontuacao"
         | ehVogal(c) == 1 = "vogal"
         | ehVogal(c) == 0 = "consoante"
         | isUpper(c) = "maiuscula"
@@ -38,7 +39,7 @@ tipo(c:r)
         | otherwise = tipoCar(c)
 
 tipos([]) = []
-tipos(c:r) = tipo(c) : tipos(r)
+tipos(string:listaString) = tipo(string) : tipos(listaString)
 
 
 
@@ -57,6 +58,4 @@ maiorQntVogais([], maior, qnt) = maior
 maiorQntVogais(c:r, maior, qnt)
         | quantidade(c) > qnt = maiorQntVogais(r, c, quantidade(maior))
         | otherwise = maiorQntVogais(r, maior, qnt)
-
-
 
