@@ -6,7 +6,6 @@ pegaFator(x, y)
         | mod x y == 0 = y
         | otherwise = pegaFator(x, y+1)
 
-
 fator(x)
         | x == 1 = []
         | otherwise = pegaFator(x, 2) : fator(dividir(x, pegaFator(x, 2)))
