@@ -1,20 +1,19 @@
 module Q1_trab1 where
 
-dividir(x, y) = div x y
+primo(x, y)
+    | y > div x 2 = x
+    | mod x y == 0 = primo(x+1, 2)
+    | otherwise = primo(x, y+1)
 
-pegaFator(x, y)
-        | mod x y == 0 = y
-        | otherwise = pegaFator(x, y+1)
+calcula(a, b, c, p)
+    | mod a p == 0 && mod b p == 0 && mod c p == 0 = p : calcula(div a p, div b p, div c p, p)
+    | mod a p == 0 && mod b p == 0 = p : calcula(div a p, div b p, c, p)
+    | mod a p == 0 && mod c p == 0 = p : calcula(div a p, b, div c p, p)
+    | mod b p == 0 && mod c p == 0 = p : calcula(a, div b p, div c p, p)
+    | mod a p == 0 = p : calcula(div a p, b, c, p)
+    | mod b p == 0 = p : calcula(a, div b p, c, p)
+    | mod c p == 0 = p : calcula(a, b, div c p, p)
+    | otherwise = calcula(a, b, c, primo(p+1, 2))
 
-fator(x)
-        | x == 1 = []
-        | otherwise = pegaFator(x, 2) : fator(dividir(x, pegaFator(x, 2)))
+fatoracao(a, b, c) = calcula(a, b, c, 2)
 
-apresenta(x, f) = do
-        putStrLn("Fator de " ++ show x ++ ":")
-        putStrLn(show(f))
-
-fatoracao(a, b, c) = do
-        apresenta(a, fator(a))
-        apresenta(b, fator(b))
-        apresenta(c, fator(c))

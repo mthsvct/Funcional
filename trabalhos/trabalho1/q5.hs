@@ -1,3 +1,4 @@
+{- ------------------------------------------------ -}
 {- LETRA A: -}
 insercao(e, []) = [e]
 insercao(e, c:r)
@@ -26,6 +27,7 @@ uniao(c:l1, l2)
 
 listas(l1, l2) = ordena(junta(uniao(l1, l2), uniao(l2, l1)), [])
 
+{- ------------------------------------------------ -}
 {- LETRA B: -}
 
 somalistas([], [], cubo) = []

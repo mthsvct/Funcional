@@ -1,6 +1,4 @@
-
 {-Essa função de fórmula mostra que temos os parametros q temos e faz o calculo dos ingressos vendidos e as despesas fixas-}
-
 formula(numS, ing, custFixo, custSecao, vendidos) = ( vendidos * ing ) - (custFixo + ( custSecao * numS ))
 
 {-Essa função é para montar uma lista com os valores que foram calculados e que seram apresentados na função apresenta 
