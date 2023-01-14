@@ -1,5 +1,6 @@
 import System.Random (randomRIO)
 
+
 diminui :: Int -> Int
 diminui(cadeira)
         | cadeira == 0 = 2
@@ -19,9 +20,12 @@ sobrou(p1, p2)
         | (p1 == 1 && p2 == 2) || (p1 == 2 && p2 == 1) = 0
 
 apresenta(ana, beatriz, carolina) = do
-        putStrLn ("Ana sentou na cadeira: " ++ show(ana))
-        putStrLn ("Beatriz sentou na cadeira: " ++ show(beatriz))
-        putStrLn ("Carolina sentou na cadeira: " ++ show(carolina))
+        putStr("Ana sentou na cadeira: ")
+        putStrLn(show(ana))
+        putStr("Beatriz sentou na cadeira: ")
+        putStrLn(show(beatriz))
+        putStr("Carolina sentou na cadeira: ")
+        putStrLn(show(carolina))
 
 cadeiras :: Int -> IO()
 cadeiras(limite) = do

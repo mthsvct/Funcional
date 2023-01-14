@@ -1,61 +1,44 @@
-module Q5_trab1 where
-
-{- 
-        A) uma função que devolva uma 
-        lista contendo a união ordenada 
-        entre (A – B) e (B – A).
--}
-
+{- LETRA A: -}
+insercao(e, []) = [e]
+insercao(e, c:r)
+    | e < c = e:c:r -- Condiçao de parada, encontrei a posição certa.
+    | e == c = c:r
+    | otherwise = c:insercao(e, r)
 
 
--- QuickSort em Haskell
-quickSort(lista)
-        | null lista == True = []
-        | otherwise = quickSort [y | y <- tail lista, y <= head lista] 
-                                ++ [head lista] 
-                                ++ quickSort [y | y <- tail lista, y > head lista]
+ordena([], ord) = ord
+ordena(c:r, ord) = ordena(r, insercao(c, ord))
+
+junta([],[]) = []
+junta([],c:l2) = c:junta([],l2)
+junta(c:l1,l2) = c:junta(l1,l2)
+
+verificar(e, []) = False
+verificar(e,c:l2)
+    | e == c = True
+    | otherwise = verificar(e,l2)
+
+uniao([],l2) = []
+uniao(c:l1, l2)
+    | verificar(c, l2) == False = c:uniao(l1,l2)
+    | otherwise = uniao(l1,l2)
 
 
+listas(l1, l2) = ordena(junta(uniao(l1, l2), uniao(l2, l1)), [])
 
--- Função que devolve x lista com os elementos de a que não estão em y
-esta(x, []) = False
-esta(x, y:lista)
-        | x == y = True
-        | otherwise = esta(x, lista)
+{- LETRA B: -}
 
-une([], y) = []
-une(x:lista, y)
-        | esta(x, y) == True = une(lista, y)
-        | otherwise = x : une(lista, y)
-    
-calcula(a, b) = quickSort(une(a, b) ++ une(b, a))
+somalistas([], [], cubo) = []
+somalistas([], b:lista2, cubo)
+    | (0^2 + b^2) > cubo = (0^2 + b^2):somalistas([], lista2, cubo)
+    | otherwise = somalistas([], lista2, cubo)
+somalistas(a:lista1, [], cubo)
+    | (a^2 + 0^2) > cubo = (a^2 + 0^2):somalistas(lista1, [], cubo)
+    | otherwise = somalistas(lista1, [], cubo)
+somalistas (a:lista1, b:lista2, cubo)
+    | (a^2+b^2) > cubo = (a^2+b^2):somalistas(lista1, lista2, cubo)
+    | otherwise = somalistas(lista1, lista2, cubo)
 
-uniao(a, b) = calcula(quickSort(a), quickSort(b))
+principal(a:lista1, b:lista2) = somalistas(lista1, lista2, (a^3+b^3))
 
-
-{-
-        B - uma função que devolva uma lista contendo a 
-                soma entre 
-                        os quadrados dos elementos das duas listas
-                                que forem maiores do que a soma entre o cubo dos 
-                                dois primeiros elementos da lista.
--}
-
-potencia (base, exp) 
-        | exp > 1 = base * potencia(base, exp-1)
-        | otherwise = base
-
-cubo(a:b:lista) = potencia(a, 3) + potencia(b, 3)
-
-quadrado([], c) = []
-quadrado(a:lista, c)
-        | a > c = potencia(a, 2) : quadrado(lista, c)
-        | otherwise = quadrado(lista, c)
-
-somaQuadrados([], []) = 0
-somaQuadrados(a:lista1, []) = a
-somaQuadrados([], b:lista2) = b
-somaQuadrados(a:lista1, b:lista2) = (a + b) + somaQuadrados(lista1, lista2)
-
-soma(a, b) = somaQuadrados( quadrado(a, cubo(a)), quadrado(b, cubo(b)) )
 
