@@ -8,10 +8,12 @@ foiLido(caractere, c:r)
         | caractere == c = True
         | otherwise = foiLido(caractere, r)
 
+
 qntSemRepetir([], lidos) = 0
 qntSemRepetir(c:r, lidos)
         | foiLido(c, lidos) = qntSemRepetir(r, lidos)
-        | otherwise = 1 + qntSemRepetir(r, lidos ++ [c])
+        | otherwise = 1 + qntSemRepetir(r, c:lidos)
+
 
 -- lista de strings
 listaStr([]) = putStrLn " "
@@ -25,21 +27,41 @@ listaStr(c:r) = do
         caracteres  que  iniciam  as  strings  da  lista,  por exemplo: 
         vogal, dígito ou outro tipo de carácter e se o mesmo é ou 
         não maiúsculo, quando possível. -}
-tipoCar(c)
+
+{- tipoCar(c)
         | isSpace(c) = "espaço"
         | isPunctuation(c) = "pontuacao"
         | ehVogal(c) == 1 = "vogal"
         | ehVogal(c) == 0 = "consoante"
         | isUpper(c) = "maiuscula"
         | isLower(c) = "minuscula"
-        | otherwise = "outro"
+        | otherwise = "outro" -}
 
-tipo(c:r) 
-        | isDigit(c) = "digito"
-        | otherwise = tipoCar(c)
+maisculaOuMinus(c)
+        | isUpper(c) = ["maiuscula"]
+        | otherwise = ["minuscula"]
+
+
+vogalOuConsoante(c)
+        | ehVogal(c) == 1 = "vogal":maisculaOuMinus(c)
+        | otherwise = "consoante":maisculaOuMinus(c)
+
+ehEspaco(c)
+        | isSpace(c) = ["espaço"]
+        | otherwise = []
+
+-- Verifica se elemento é uma letra ou não
+tipoLetra(c)
+        | isAlpha(c) = "letra":vogalOuConsoante(c)
+        | otherwise = "pontuacao":ehEspaco(c)
+
+
+tipoDigito(c:r) 
+        | isDigit(c) = ["digito"]
+        | otherwise = tipoLetra(c)
 
 tipos([]) = []
-tipos(string:listaString) = tipo(string) : tipos(listaString)
+tipos(string:listaString) = tipoDigito(string) : tipos(listaString)
 
 
 

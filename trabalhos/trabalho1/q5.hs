@@ -1,14 +1,16 @@
+module Q5_trab1 where
+
 {- ------------------------------------------------ -}
 {- LETRA A: -}
 insercao(e, []) = [e]
 insercao(e, c:r)
     | e < c = e:c:r -- Condiçao de parada, encontrei a posição certa.
-    | e == c = c:r
+    | e == c = c:r -- Caso para descartar valores repetidos.
     | otherwise = c:insercao(e, r)
 
-
-ordena([], ord) = ord
-ordena(c:r, ord) = ordena(r, insercao(c, ord))
+{- lista2 é onde estará o resultado da ordenação da lista 1. -}
+ordena([], lista2) = lista2
+ordena(c:r, lista2) = ordena(r, insercao(c, lista2))
 
 junta([],[]) = []
 junta([],c:l2) = c:junta([],l2)
@@ -41,6 +43,9 @@ somalistas (a:lista1, b:lista2, cubo)
     | (a^2+b^2) > cubo = (a^2+b^2):somalistas(lista1, lista2, cubo)
     | otherwise = somalistas(lista1, lista2, cubo)
 
+principal([], []) = [] -- Acrescentei casos de erro
+principal([], lista2) = []
+principal(lista1, []) = [] 
 principal(a:lista1, b:lista2) = somalistas(lista1, lista2, (a^3+b^3))
 
 

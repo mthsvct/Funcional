@@ -27,7 +27,7 @@ apresenta(ana, beatriz, carolina) = do
         putStr("Carolina sentou na cadeira: ")
         putStrLn(show(carolina))
 
-cadeiras :: Int -> IO()
+cadeiras :: Int -> IO() 
 cadeiras(limite) = do
         a <- randomRIO(1, limite::Int) 
         b <- randomRIO(1, limite::Int) 
