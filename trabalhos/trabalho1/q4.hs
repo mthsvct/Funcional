@@ -22,25 +22,14 @@ listaStr(c:r) = do
         listaStr(r)
 
 
-{- 
-        B) uma  função  que  devolve  uma  lista  contendo  os  tipos  de  
+{-      B) uma  função  que  devolve  uma  lista  contendo  os  tipos  de  
         caracteres  que  iniciam  as  strings  da  lista,  por exemplo: 
         vogal, dígito ou outro tipo de carácter e se o mesmo é ou 
-        não maiúsculo, quando possível. -}
-
-{- tipoCar(c)
-        | isSpace(c) = "espaço"
-        | isPunctuation(c) = "pontuacao"
-        | ehVogal(c) == 1 = "vogal"
-        | ehVogal(c) == 0 = "consoante"
-        | isUpper(c) = "maiuscula"
-        | isLower(c) = "minuscula"
-        | otherwise = "outro" -}
+        não maiúsculo, quando possível.      -}
 
 maisculaOuMinus(c)
         | isUpper(c) = ["maiuscula"]
         | otherwise = ["minuscula"]
-
 
 vogalOuConsoante(c)
         | ehVogal(c) == 1 = "vogal":maisculaOuMinus(c)
