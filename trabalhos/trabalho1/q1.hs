@@ -19,5 +19,27 @@ calcula(a, b, c, p)
 -- Função que calcula a quantidade de vezes que aparece um número na lista.
 -- Função que apresenta os resultados.
 
-fatoracao(a, b, c) = calcula(a, b, c, 2)
+contabiliza(cabeca, [], contador) = contador
+contabiliza(cabeca, c:r, contador)
+    | cabeca == c = contabiliza(cabeca, r, contador+1)
+    | otherwise = contador
+
+
+mostraResultados(c, r, contei) = do
+        putStr("O numero ")
+        putStr(show(c))
+        putStr(" aparece ")
+        putStr(show(contabiliza(c, r, 1)))
+        putStrLn(" vezes.")
+        
+
+apresenta([], contei) = putStrLn "FIM!"
+apresenta(c:r, contei)
+        | c == contei = apresenta(r, contei)
+        | otherwise = do 
+                mostraResultados(c, r, contei)
+                apresenta(r, c)
+     
+-- Esta função recebe 3 valores e é calculado o fatoração deles.
+fatoracao(a, b, c) = apresenta(calcula(a, b, c, 2), 0)
 

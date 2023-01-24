@@ -1,5 +1,13 @@
 module Q5_trab1 where
 
+{- 
+    O que falta do trabalho:
+        1. Função para ler uma lista de string 4Q
+        2. [OK] - Função que contabiliza de vezes que um determinado elemento se repete na lista resultante da Q1.
+        3. Função que realiza a junção das listas de União ordenada
+-}
+
+
 {- ------------------------------------------------ -}
 {- LETRA A: -}
 insercao(e, []) = [e]
