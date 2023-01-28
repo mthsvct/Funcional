@@ -14,6 +14,23 @@ qntSemRepetir(c:r, lidos)
         | foiLido(c, lidos) = qntSemRepetir(r, lidos)
         | otherwise = 1 + qntSemRepetir(r, c:lidos)
 
+lerLista = do
+        putStr "Digite uma lista de strings: "
+        strings <- getLine
+        return(read strings :: [String]) 
+
+apresentaA([]) = putStrLn " "
+apresentaA(c:r) = do
+        putStr "A string "
+        putStr c
+        putStr " possui "
+        putStr (show (qntSemRepetir(c, [])))
+        putStrLn " caracteres sem repetir."
+        apresentaA(r)
+
+principalA = do
+        lista <- lerLista
+        apresentaA(lista)
 
 -- lista de strings
 listaStr([]) = putStrLn " "
