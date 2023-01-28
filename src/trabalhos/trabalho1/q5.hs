@@ -10,20 +10,6 @@ module Q5_trab1 where
 
 {- ------------------------------------------------ -}
 {- LETRA A: -}
-insercao(e, []) = [e]
-insercao(e, c:r)
-    | e < c = e:c:r -- Condiçao de parada, encontrei a posição certa.
-    | e == c = c:r -- Caso para descartar valores repetidos.
-    | otherwise = c:insercao(e, r)
-
-{- lista2 é onde estará o resultado da ordenação da lista 1. -}
-ordena([], lista2) = lista2
-ordena(c:r, lista2) = ordena(r, insercao(c, lista2))
-
-junta([],[]) = []
-junta([],c:l2) = c:junta([],l2)
-junta(c:l1,l2) = c:junta(l1,l2)
-
 verificar(e, []) = False
 verificar(e,c:l2)
     | e == c = True
@@ -34,8 +20,15 @@ uniao(c:l1, l2)
     | verificar(c, l2) == False = c:uniao(l1,l2)
     | otherwise = uniao(l1,l2)
 
+junta([],[]) = []
+junta([], c:l2) = c:junta([],l2)
+junta(c:l1,[]) = c:junta(l1,[])
+junta(c:l1, c2:l2)
+    | c < c2 = c:junta(l1, c2:l2)
+    | c >= c2 = c2:junta(c:l1, l2)
+    | otherwise = junta(c:l1, c2:l2)
 
-listas(l1, l2) = ordena(junta(uniao(l1, l2), uniao(l2, l1)), [])
+principalA(l1, l2) = junta(uniao(l1, l2), uniao(l2, l1))
 
 {- ------------------------------------------------ -}
 {- LETRA B: -}
