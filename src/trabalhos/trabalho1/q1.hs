@@ -1,5 +1,7 @@
 module Q1_trab1 where
 
+{- Função principal para iniciar a execução do programa: fatoracao(...) -}
+
 primo(x, y)
     | y > div x 2 = x
     | mod x y == 0 = primo(x+1, 2)

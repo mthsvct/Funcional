@@ -1,3 +1,5 @@
+{- Função principal para iniciar a execução do programa: principal(...) -}
+
 {-Essa função de fórmula mostra que temos os parametros q temos e faz o calculo dos ingressos vendidos e as despesas fixas-}
 formula(numS, ing, custFixo, custSecao, vendidos) = ( vendidos * ing ) - (custFixo + ( custSecao * numS ))
 

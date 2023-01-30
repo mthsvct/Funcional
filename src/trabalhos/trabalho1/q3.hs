@@ -1,5 +1,7 @@
 import System.Random (randomRIO)
 
+{- Função principal para iniciar a execução do programa: cadeiras(...) -}
+
 
 diminui :: Int -> Int
 diminui(cadeira)

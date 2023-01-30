@@ -1,15 +1,8 @@
 module Q5_trab1 where
 
-{- 
-    O que falta do trabalho:
-        1. Função para ler uma lista de string 4Q
-        2. [OK] - Função que contabiliza de vezes que um determinado elemento se repete na lista resultante da Q1.
-        3. Função que realiza a junção das listas de União ordenada
--}
-
-
 {- ------------------------------------------------ -}
 {- LETRA A: -}
+{- Função principal para iniciar a execução do programa da letra A: principalA(...) -}
 verificar(e, []) = False
 verificar(e,c:l2)
     | e == c = True
@@ -32,7 +25,7 @@ principalA(l1, l2) = junta(uniao(l1, l2), uniao(l2, l1))
 
 {- ------------------------------------------------ -}
 {- LETRA B: -}
-
+{- Função principal para iniciar a execução do programa da letra B: principal(...) -}
 somalistas([], [], cubo) = []
 somalistas([], b:lista2, cubo)
     | (0^2 + b^2) > cubo = (0^2 + b^2):somalistas([], lista2, cubo)

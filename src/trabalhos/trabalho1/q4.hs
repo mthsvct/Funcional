@@ -1,8 +1,9 @@
 module Q4_trab1 where
 import Data.Char
 
-
+{- ------------------------------------------------ -}
 -- a) uma função para contar o número de caracteres que cada string possui sem repetir;
+{- Função principal para iniciar a execução do programa da letra A: principalA(...) -}
 foiLido(caractere, []) = False
 foiLido(caractere, c:r)
         | caractere == c = True
@@ -39,11 +40,12 @@ listaStr(c:r) = do
         listaStr(r)
 
 
+{- ------------------------------------------------ -}
 {-      B) uma  função  que  devolve  uma  lista  contendo  os  tipos  de  
         caracteres  que  iniciam  as  strings  da  lista,  por exemplo: 
         vogal, dígito ou outro tipo de carácter e se o mesmo é ou 
         não maiúsculo, quando possível.      -}
-
+{- Função principal para iniciar a execução do programa: tipos(...) -}
 maisculaOuMinus(c)
         | isUpper(c) = ["maiuscula"]
         | otherwise = ["minuscula"]
@@ -77,6 +79,9 @@ ehVogal(c)
         | c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' = 1
         | otherwise = 0
 
+
+{- ------------------------------------------- -}
+{- Letra C -}
 -- Função que contabiliza a quantidade de vogais de uma string
 quantidade([]) = 0
 quantidade(c:r) = ehVogal(c) + quantidade(r)
