@@ -1,7 +1,7 @@
+module Q3_trab1 where
 import System.Random (randomRIO)
 
 {- Função principal para iniciar a execução do programa: cadeiras(...) -}
-
 
 diminui :: Int -> Int
 diminui(cadeira)
@@ -36,9 +36,7 @@ cadeiras(limite) = do
         let ana = buscaCadeira(a, 1)
         let beatriz = ocupada(buscaCadeira(b, 1), ana)
         let carolina = sobrou(ana, beatriz)
-
         apresenta(ana, beatriz, carolina)
-
 
 main = do 
         putStrLn "Hello World!"

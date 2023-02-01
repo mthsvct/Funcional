@@ -34,7 +34,4 @@ apresenta(c:lista)
     | c == -1 = apresentaErro
     | otherwise = apresentaValores(c:lista)
     
-
-
-
 principal(precoIng, limitePessoas, custoFixo, custoSecao) = apresenta( calcula(1, precoIng, limitePessoas, custoFixo, custoSecao, 1, 1, formula(1, precoIng, custoFixo, custoSecao, 1)) )

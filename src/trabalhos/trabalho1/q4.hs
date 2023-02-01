@@ -45,7 +45,7 @@ listaStr(c:r) = do
         caracteres  que  iniciam  as  strings  da  lista,  por exemplo: 
         vogal, dígito ou outro tipo de carácter e se o mesmo é ou 
         não maiúsculo, quando possível.      -}
-{- Função principal para iniciar a execução do programa: tipos(...) -}
+{- Função principal para iniciar a execução do programa da letraB: tipos(...) -}
 maisculaOuMinus(c)
         | isUpper(c) = ["maiuscula"]
         | otherwise = ["minuscula"]
@@ -55,7 +55,7 @@ vogalOuConsoante(c)
         | otherwise = "consoante":maisculaOuMinus(c)
 
 ehEspaco(c)
-        | isSpace(c) = ["espaço"]
+        | isSpace(c) = ["espaco"]
         | otherwise = []
 
 -- Verifica se elemento é uma letra ou não
@@ -92,3 +92,6 @@ maiorQntVogais(c:r, maior, qnt)
         | quantidade(c) > qnt = maiorQntVogais(r, c, quantidade(maior))
         | otherwise = maiorQntVogais(r, maior, qnt)
 
+principalC(lista) = do
+        putStr "A string que possui a maior quantidade de vogais é: "
+        putStrLn(maiorQntVogais(lista, "", 0))
