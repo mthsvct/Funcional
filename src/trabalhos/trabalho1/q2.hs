@@ -1,3 +1,5 @@
+module Q2_trab1 where
+
 {- Função principal para iniciar a execução do programa: principal(...) -}
 
 {-Essa função de fórmula mostra que temos os parametros q temos e faz o calculo dos ingressos vendidos e as despesas fixas-}
@@ -14,7 +16,7 @@ pegaValores(numSec, vendidos, lucro) = numSec:vendidos:lucro:[]
   retornando os valores resultantes a partir da função pega vaalores  -}
 calcula(numSec, precoIng, limitePessoas, custoFixo, custoSecao, vendidos, contador, valor)
     | numSec == 20 = -1:[]
-    | valor > 0 = pegaValores( numSec, vendidos, valor) )
+    | valor > 0 = pegaValores( numSec, vendidos, valor)
     | contador == limitePessoas = calcula(numSec+1, precoIng, limitePessoas, custoFixo, custoSecao, vendidos+1, 1, formula(numSec+1, precoIng, custoFixo, custoSecao, vendidos+1))
     | otherwise = calcula(numSec, precoIng, limitePessoas, custoFixo, custoSecao, vendidos+1, contador+1, formula(numSec, precoIng, custoFixo, custoSecao, vendidos+1))
 
@@ -26,9 +28,13 @@ apresentaValores(numS:vendidos:lucro:listaResultados) = do
     putStr("Número de sesões = ") 
     putStrLn (show(numS))
 
+apresentaErro = putStrLn("Esta combinação de valores não resulta lucro.")
+
 apresenta(c:lista)
     | c == -1 = apresentaErro
     | otherwise = apresentaValores(c:lista)
     
 
-principal(precoIng, limitePessoas, custoFixo, custoSecao) = apresenta( calcula(1, precoIng, limitePessoas, custoFixo, custoSecao, 1, 1) )
+
+
+principal(precoIng, limitePessoas, custoFixo, custoSecao) = apresenta( calcula(1, precoIng, limitePessoas, custoFixo, custoSecao, 1, 1, formula(1, precoIng, custoFixo, custoSecao, 1)) )
