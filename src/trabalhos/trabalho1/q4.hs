@@ -89,7 +89,7 @@ quantidade(c:r) = ehVogal(c) + quantidade(r)
 -- Função que devolve a string que possui a maior quantidade de vogais.
 maiorQntVogais([], maior, qnt) = maior
 maiorQntVogais(c:r, maior, qnt)
-        | quantidade(c) > qnt = maiorQntVogais(r, c, quantidade(maior))
+        | quantidade(c) > qnt = maiorQntVogais(r, c, quantidade(c))
         | otherwise = maiorQntVogais(r, maior, qnt)
 
 principalC(lista) = do
