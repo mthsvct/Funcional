@@ -28,3 +28,22 @@ apresentaA((c, n):r) = do
         apresentaA(r)
 
 principalA(lista) = apresentaA(contabiliza(lista))
+
+-- --------------------------------------------------------------------------------
+-- B) devolva uma lista string contendo as strings que seu tamanho seja maior do que 5 e que inicie com vogais. Exemplo: ["abacate", "banana", "uva"] -> ["abacate", "banana"].
+mostraS([], cont) = putStrLn ""
+mostraS(c:r, cont) = do
+        putStr(show cont)
+        putStr " - "
+        putStrLn(c)
+        mostraS(r, cont+1)
+
+apresentaB(lista) = do
+        putStrLn "As strings que iniciam com vogal e tem mais de 5 caracteres sao: "
+        mostraS(lista, 1)
+
+compara(lista) = [x | x <- lista, (ehVogal(head x) == 1) && (length(x) > 5)]
+
+principalB(lista) = apresentaB(compara(lista))
+
+-- 
