@@ -46,4 +46,19 @@ compara(lista) = [x | x <- lista, (ehVogal(head x) == 1) && (length(x) > 5)]
 
 principalB(lista) = apresentaB(compara(lista))
 
--- 
+-- --------------------------------------------------------------------------------
+-- C) devolva a lista de string substituindo as vogais em cada string por @. Exemplo: ["abacate", "banana", "uva"] -> ["@b@c@t@", "@b@n@n@", "@v@"].
+
+poeArr([]) = []
+poeArr(c:r)
+    | ehVogal(c) == 1 = '@':poeArr(r)
+    | otherwise = c:poeArr(r)
+
+substitui([]) = []
+substitui(c:r) = poeArr(c):substitui(r)
+
+apresentaC(lista) = do
+        putStrLn "As strings com as vogais substituidas por @ sao: "
+        mostraS(lista, 1)
+
+principalC(lista) = apresentaC(substitui(lista))
