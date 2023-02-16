@@ -52,10 +52,10 @@ principalB(lista) = apresentaB(compara(lista))
 poeArr([]) = []
 poeArr(c:r)
     | ehVogal(c) == 1 = '@':poeArr(r)
-    | otherwise = c:poeArr(r)
+    | otherwise = c:poeArr(r) -- c eh um caractere
 
 substitui([]) = []
-substitui(c:r) = poeArr(c):substitui(r)
+substitui(c:r) = poeArr(c):substitui(r) -- c eh uma string
 
 apresentaC(lista) = do
         putStrLn "As strings com as vogais substituidas por @ sao: "

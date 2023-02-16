@@ -12,3 +12,6 @@ produtoCarteziano(l1, l2) = [(a,b) | a <- l1, b <- l2]
 
 somaQuadrados(l1, l2) = [(a+b)^2 | a <- l1, b<-l2]
 
+divs n = [c | c <- [1..n], mod n c == 0]
+
+primo n = divs n == [1,n]
