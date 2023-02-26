@@ -25,3 +25,25 @@ montaListas(c:l1, i, c2:l2, j, l50, l200)
     | otherwise = montaListas(l1, i+1, l2, j+1, monta50(c, i, l50), monta200(c, i, l200))
 
 principalA(l1, l2) = montaListas(l1, 0, l2, 0, [], [])
+
+{-
+    B) Devolva o produto dos elementos das duas listas dos múltiplos de 3 > 50 e dos múltiplos
+    de 7 menos do que 200.
+-}
+
+mult3(c, m3)
+    | c > 50 && mod c 3 == 0 = c * m3 -- se o elemento for maior que 50 e for multiplo de 3, multiplica
+    | otherwise = m3 -- se não, retorna o valor atual.
+
+
+mult7(c, m7)
+    | c < 200 && mod c 7 == 0 = c * m7 -- se o elemento for menor que 200 e for multiplo de 7, multiplica
+    | otherwise = m7 -- se não, retorna o valor atual.
+
+
+produto([], [], m3, m7) = (m3, m7)
+produto([], c2:l2, m3, m7) = produto([], l2, mult3(c2, m3), mult7(c2, m7))
+produto(c:l1, l2, m3, m7) = produto(l1, l2, mult3(c, m3), mult7(c, m7))
+
+
+principalB(l1, l2) = produto(l1, l2, 1, 1)
