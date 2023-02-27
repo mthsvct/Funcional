@@ -47,3 +47,24 @@ produto(c:l1, l2, m3, m7) = produto(l1, l2, mult3(c, m3), mult7(c, m7))
 
 
 principalB(l1, l2) = produto(l1, l2, 1, 1)
+
+{- C) Devolva uma lista ordenada contendo elementos das duas listas que sejam maiores do que 50 e que sejam ímpares múltiplos de 3.
+    > 50 && mod c 2 /= 0 && mod c 3 == 0
+ -}
+
+compara(c, r)
+    | c > 50 && mod c 2 == 1 && mod c 3 == 0 = c:r
+    | otherwise = r
+
+monta([], [], r) = reverse(r)
+monta([], c2:l2, r) = monta([], l2, compara(c2, r))
+monta(c:l1, [], r) = monta(l1, [], compara(c, r))
+monta(c:l1, c2:l2, r)
+    | c < c2 = monta(l1, c2:l2, compara(c, r))
+    | c > c2 = monta(c:l1, l2, compara(c2, r))
+    | otherwise = monta(l1, l2, compara(c, r))
+
+principalC(l1, l2) = monta(l1, l2, [])
+
+
+
