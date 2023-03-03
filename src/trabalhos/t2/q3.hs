@@ -74,5 +74,13 @@ monta(c:l1, c2:l2, r)
 
 principalC(l1, l2) = monta(l1, l2, [])
 
+{- 2ª forma de fazer a C: -}
+
+m50(lista) = [ x | x <- lista, x > 50 && mod x 2 == 1 && mod x 3 == 0 ]
+
+principalC_2(l1, l2) = quicksort(m50(l1) ++ m50(l2))
+
+
+
 
 
