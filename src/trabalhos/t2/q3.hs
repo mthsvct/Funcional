@@ -7,6 +7,7 @@ module Q3_trab2 where
 -- A) devolva duas listas, a primeira contendo os números das posições pares maiores do que 50 
 -- e a segunda os elementos ímpares menores que 200.
 
+-- PERGUNTAR A ELA.
 
 monta50(c, i, rL1)
     | mod i 2 == 0 && c > 50 = c:rL1
@@ -28,8 +29,10 @@ principalA(l1, l2) = montaListas(l1, 0, l2, 0, [], [])
 
 {-
     B) Devolva o produto dos elementos das duas listas dos múltiplos de 3 > 50 e dos múltiplos
-    de 7 menos do que 200.
+    de 7 menores do que 200.
 -}
+
+-- SOMA de todos os produtos
 
 mult3(c, m3)
     | c > 50 && mod c 3 == 0 = c * m3 -- se o elemento for maior que 50 e for multiplo de 3, multiplica
@@ -51,6 +54,11 @@ principalB(l1, l2) = produto(l1, l2, 1, 1)
 {- C) Devolva uma lista ordenada contendo elementos das duas listas que sejam maiores do que 50 e que sejam ímpares múltiplos de 3.
     > 50 && mod c 2 /= 0 && mod c 3 == 0
  -}
+
+-- FUnção quicksort
+quicksort [] = []
+quicksort (x:xs) = quicksort [y | y <- xs, y <= x] ++ [x] ++ quicksort [y | y <- xs, y > x]
+
 
 compara(c, r)
     | c > 50 && mod c 2 == 1 && mod c 3 == 0 = c:r
