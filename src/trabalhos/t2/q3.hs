@@ -60,7 +60,7 @@ quicksort [] = []
 quicksort (x:xs) = quicksort [y | y <- xs, y <= x] ++ [x] ++ quicksort [y | y <- xs, y > x]
 
 
-compara(c, r)
+{- compara(c, r)
     | c > 50 && mod c 2 == 1 && mod c 3 == 0 = c:r
     | otherwise = r
 
@@ -72,7 +72,7 @@ monta(c:l1, c2:l2, r)
     | c > c2 = monta(c:l1, l2, compara(c2, r))
     | otherwise = monta(l1, l2, compara(c, r))
 
-principalC(l1, l2) = monta(l1, l2, [])
+principalC(l1, l2) = monta(l1, l2, []) -}
 
 {- 2ª forma de fazer a C: -}
 
@@ -84,3 +84,6 @@ principalC_2(l1, l2) = quicksort(m50(l1) ++ m50(l2))
 
 
 
+decbin(dec, indice, result)
+    | dec >= 1 = decbin(div dec 2, indice + 1, result + ((mod dec 2) * (10 ^ indice)))
+    | otherwise = result

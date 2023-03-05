@@ -6,7 +6,6 @@ insereOrdenado(e, c:r)
     | e < c = e:c:r
     | otherwise = insereOrdenado(e, r)
 
-
 caracteresMaiusculos([], aux) = aux
 caracteresMaiusculos(c:r, aux)
     | isUpper( c ) = caracteresMaiusculos(r, insereOrdenado(c, aux))
