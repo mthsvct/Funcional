@@ -6,6 +6,8 @@ somaArq(pasta) = do
     -- Lendo um arquivo com números e somando
     nums <- readFile "num.txt"
     -- Transformando a string em uma lista de inteiros
+        -- lines -> transforma a string em uma lista de strings separando por \n
+        -- map -> aplica a função read em cada elemento da lista
     let numeros = map read (lines nums) :: [Int]
     -- Somando os números
     let n = soma(numeros)
