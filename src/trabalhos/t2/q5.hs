@@ -2,14 +2,18 @@ module Q5_t2 where
 
 {- 
     alunos(Matrícula, Nome, Curso, Período), 
-
     curso(Código, Nome, Quantidade de Períodos), 
-
     Disciplinas(Código da Disciplina, Código do Curso, Nome Disciplina, Período) e 
-
     Notas(Matricula, Código Disciplina, Nota1, Nota2).
 -}
 
+{- 
+    a = ["Matheus", "victor", "Matheus Victor", "MV", "Millena"]
+    b = ["Esposo da Milena", "Victor", "Educador Fisico", "Matheus Victor Ferreira da Silva"]
+
+    c = []
+
+-}
 
 type Matricula = Int
 type Nome = String
@@ -26,7 +30,6 @@ type Notas = (Matricula, Codigo, Nota, Nota)
 type Dados = ([Curso], [Aluno], [Disciplina], [Notas])
 
 -- Função que ler um curso pelo o teclado
-
 lerCurso :: IO Curso
 lerCurso = do
     putStr "Digite o código do curso: "
@@ -42,9 +45,7 @@ gestaoLerCurso = do
     curso <- lerCurso
     putStrLn ("Curso: " ++ show curso)
 
-
 -- Função que lê um aluno pelo o teclado
-
 lerAluno :: IO Aluno
 lerAluno = do
     putStr "Digite a matrícula do aluno: "
