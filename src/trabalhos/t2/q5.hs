@@ -7,14 +7,6 @@ module Q5_t2 where
     Notas(Matricula, Código Disciplina, Nota1, Nota2).
 -}
 
-{- 
-    a = ["Matheus", "victor", "Matheus Victor", "MV", "Millena"]
-    b = ["Esposo da Milena", "Victor", "Educador Fisico", "Matheus Victor Ferreira da Silva"]
-
-    c = []
-
--}
-
 type Matricula = Int
 type Nome = String
 type Codigo = Int
