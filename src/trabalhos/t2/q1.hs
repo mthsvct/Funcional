@@ -13,8 +13,11 @@ ehVogal(c)
 soma([]) = 0
 soma(c:r) = c + soma(r)
 
-contabiliza([]) = []
-contabiliza(c:r) = (c, soma([ehVogal(x) | x <- c])):contabiliza(r)
+contabiliza(lista) = [ ( c, soma([ehVogal(x) | x <- c]) ) | c <- lista ]
+
+
+
+
 
 apresentaA([]) = putStrLn ""
 apresentaA((c, n):r) = do
