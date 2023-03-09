@@ -10,23 +10,20 @@ ehVogal(c)
         | c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' = 1
         | otherwise = 0
 
-soma([]) = 0
-soma(c:r) = c + soma(r)
+contabiliza(lista) = [ ( c, sum([ehVogal(x) | x <- c]) ) | c <- lista ]
 
-
-
-contabiliza(lista) = [ ( c, soma([ehVogal(x) | x <- c]) ) | c <- lista ]
-
-apresentaA([]) = putStrLn ""
-apresentaA((c, n):r) = do
+apresentaA([], count) = do
+        putStr "\nTotal de vogais em todas as strings: "
+        putStrLn (show count)
+apresentaA((c, n):r, count) = do
         putStr "A string "
         putStr c
         putStr " tem "
         putStr (show n)
         putStrLn " vogais."
-        apresentaA(r)
+        apresentaA(r, count+n)
 
-principalA(lista) = apresentaA(contabiliza(lista))
+principalA(lista) = apresentaA(contabiliza(lista), 0)
 
 -- --------------------------------------------------------------------------------
 -- B) devolva uma lista string contendo as strings que seu tamanho seja maior do que 5 e que inicie com vogais. Exemplo: ["abacate", "banana", "uva"] -> ["abacate"].
