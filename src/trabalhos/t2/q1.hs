@@ -54,8 +54,5 @@ principalB(lista) = apresentaB(compara(lista))
 -- --------------------------------------------------------------------------------
 -- C) devolva a lista de string substituindo as vogais em cada string por @. Exemplo: ["abacate", "banana", "uva"] -> ["@b@c@t@", "@b@n@n@", "@v@"].
 
-arroba(c)
-        | ehVogal(c) == 1 = '@'
-        | otherwise = c
+substituiStr(l) = [ [ if ehVogal(x) == 1 then '@' else x |x <- c ] | c<-l]
 
-substituiStr(l) = [ [ arroba(x) |x <- c ] | c<-l]
