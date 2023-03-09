@@ -1,4 +1,4 @@
-module Q1_trab1 where
+module Q1_t2 where
 
 -- Faça um programa em haskell que leia uma lista de strings e então faça uma função para cada item que:
 
@@ -13,11 +13,9 @@ ehVogal(c)
 soma([]) = 0
 soma(c:r) = c + soma(r)
 
+
+
 contabiliza(lista) = [ ( c, soma([ehVogal(x) | x <- c]) ) | c <- lista ]
-
-
-
-
 
 apresentaA([]) = putStrLn ""
 apresentaA((c, n):r) = do
@@ -26,7 +24,6 @@ apresentaA((c, n):r) = do
         putStr " tem "
         putStr (show n)
         putStrLn " vogais."
-        
         apresentaA(r)
 
 principalA(lista) = apresentaA(contabiliza(lista))
@@ -54,5 +51,6 @@ principalB(lista) = apresentaB(compara(lista))
 -- --------------------------------------------------------------------------------
 -- C) devolva a lista de string substituindo as vogais em cada string por @. Exemplo: ["abacate", "banana", "uva"] -> ["@b@c@t@", "@b@n@n@", "@v@"].
 
-substituiStr(l) = [ [ if ehVogal(x) == 1 then '@' else x |x <- c ] | c<-l]
+substituiStr :: [String] -> [String]
+substituiStr(l) = [ [ if ehVogal(x) == 1 then '@' else x | x<-c ] | c<-l ]
 
