@@ -1,116 +1,131 @@
+{- Faça um programa em Haskell que leia uma lista de times de futebol contendo nome do clube, estado e país
+a qual pertence e ano de fundação do clube. Faça uma função que ordene a lista pelo campo nome do clube
+usando o Quicksort, e depois possibilite ao usuário ver toda a lista e permita também o usuário buscar
+informações de um clube pelo nome do clube. (1,5 pontos)
+Obs.: cuide para não comparar minúsculas com maiúsculas. -}
+module Q4 where
 
-{- Entrada eh uma string com o nome do time, o estado, o país e um inteiro 
- com o ano da fundacao do clube -}
+import Data.Char
+
 
 type Time = (String, String, String, Int)
 
--- lista de times PARA TESTES
+-- ------------ FUNÇÕES DE LEITURA -------------- --
+
+-- Funções Complementares
 times :: [Time]
 times = [ ("Flamengo", "Rio de Janeiro", "Brasil", 1895), ("Palmeiras", "São Paulo", "Brasil", 1914), ("Real Madrid", "Madrid", "Espanha", 1902), ("Vasco", "Rio de Janeiro", "Brasil", 1898), ("PSG","Paris","França",1970 ) ]
+
+-- Função que ler string do teclado
+lerString = do
+    x <- getLine
+    return x
+
+-- Função que ler int do teclado
+lerInt = do
+    putStr "Digite um número: "
+    x <- getLine
+    return (read x :: Int)
+
+
+lerLista = do
+    putStr "Digite a lista de times: "
+    l <- getLine 
+    let lista = [ maiscula(x) | x <- (read l :: [Time])]
+    return lista
+
+
+maisc(x) = [ toUpper y | y <- x]
+
+maiscula((nome, estado, pais, ano)) = (maisc(nome), maisc(estado), maisc(pais), ano)
+
+-- ------------ FUNÇÕES DE ORDENAÇÃO -------------- --
+
+
+quicksort [] = []
+quicksort (c:r) = quicksort [x | x <- r, x < c] ++ [c] ++ quicksort [x | x <- r, x >= c]
+
 
 -- --------------------------- OPCAO 1 do MENU - IMPRIMIR ------------------------- --
 
 imprimir ([]) = putStrLn " "
 imprimir((nome,estado,pais,ano):t) = do
-    putStrLn ("Nome do clube: " ++ nome)
+    putStrLn ("\nNome do clube: " ++ nome)
     putStrLn ("Estado do clube: " ++ estado)
     putStrLn ("Pais do clube: " ++ pais )
     putStrLn ("Ano de fundacao: " ++ show ano)
+    putStrLn " "
 
     imprimir(t)
 
 -- --------------------- OPCAO 2 do MENU - IMPRIMIR UM TIME ESPECIFICO -------------- --
 
-fst4 :: (a, b, c, d) -> a
 fst4 (x, _, _, _) = x
 
 busca(t, nome) = [x | x <- t, fst4(x) == nome]
 
 gestaoLerNome = do
-    putStrLn "Digite o nome do clube que voce quer a informacao: "
+    putStr "Digite o nome do clube que voce quer a informacao: "
     nome <- getLine
     return nome
 
+apresenta([]) = putStrLn "Clube nao encontrado! \n"
+apresenta(x) = imprimir(x)
+
 especifico(t) = do
     nome <- gestaoLerNome
-    let x = busca(t, nome)
-    imprimir(x)
-    return t
-
--- ------------ OPCAO 3 do MENU - LEITURA DE UM NOVO TIME -------------- --
-
-{- Funcao para ler o time -}
-lerTime = do
-        putStrLn "Digite o nome do clube: "
-        nome <- getLine
-        putStrLn "Digite o estado do clube: "
-        estado <- getLine
-        putStrLn "Digite o país do clube: "
-        pais <- getLine
-        putStrLn "Digite o ano de fundacao do clube: "
-        ano <- getLine
-        return(nome,estado,pais, read ano :: Int)
-
-
-{- Gestao para ler um time e insere o time lido dentro da lista -}
-
-gestaoLerTime(t) = do
-    x <- lerTime
-    return x
+    let x = busca(t, maisc(nome))
+    apresenta(x)
 
 -- --------------------------- FUNÇÕES DO MENU ------------------------- --
 
 erro = putStrLn "KRIE VERGONHA NA CARA, digite um valor valido!"
 
+encerra = putStrLn "Programa encerrado! \n"
 
 {- executarOpcao :: Int -> [Time] -> [Time] -}
-executarOpcao 1 t = do
-    imprimir(t)
-    return t
-executarOpcao 2 t = do
-    especifico(t)
-    return t
-executarOpcao 3 t = do
-    x <- gestaoLerTime(t)
-    return (x:t)
-executarOpcao _ t = do
-    erro
-    return t
-
+executarOpcao 1 t = imprimir(t)
+executarOpcao 2 t = especifico(t)
+executarOpcao 0 t = encerra
+executarOpcao _ t = erro
 
 -- Função que lê a opção do menu
+lerOpcao :: IO Int
 lerOpcao = do
     putStr "Digite a opção: "
-    opcao <- getLine
+    opcao <- lerInt
     putStrLn ""
-    return (read opcao)
-
+    return opcao
 
 menu = do
     putStrLn "Menu"
     putStrLn "1 - Exibir toda a lista"
     putStrLn "2 - Exibir informação especificas sobre um time"
-    putStrLn "3 - Ler um novo time"
     putStrLn "0 - Sair"
 
-
--- Função que executa o menu
-{- executarMenu :: ListaTimes -- AJEITAR -}
-executarMenu(t) = do
+executarMenu t = do
     menu
     op <- lerOpcao
 
+    executarOpcao op t
+
     if op /= 0 then 
-        executarMenu( executarOpcao(op,t) ) 
+        executarMenu t
     else 
-        return ()
+        return t
 
--- Quando for executar: executarMenu([])
-
-
--- Função de ordenação utilizando Quicksort
-quicksort :: (Ord a) => [a] -> [a]
-quicksort [] = []
-quicksort (c:r) = quicksort [x | x <- r, x < c] ++ [c] ++ quicksort [x | x <- r, x >= c]
+exT = executarMenu [maiscula(x) | x <- (quicksort times)]
 
 
+main :: IO ()
+main = do
+    -- Primeiro ler a lista de times com a função lerLista
+    lista <- lerLista
+
+    -- Depois ordenar a lista com a função quicksort
+    let listaOrdenada = quicksort lista
+
+    -- Depois executar o menu
+    aux <- executarMenu listaOrdenada
+
+    putStrLn "Fim do programa!"
