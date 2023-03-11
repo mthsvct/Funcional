@@ -7,47 +7,34 @@ module Q3_trab2 where
 -- A) devolva duas listas, a primeira contendo os números das posições pares maiores do que 50 
 -- e a segunda os elementos ímpares menores que 200.
 
--- PERGUNTAR A ELA.
-monta50(c, i, rL1)
-    | mod i 2 == 0 && c > 50 = c:rL1
-    | otherwise = rL1
+maiores50(l) = [ l !! p | p <- [0,2.. length(l) ], l !! p > 50 ]
 
-monta200(c, i, rL1)
-    | i `mod` 2 == 1 && c < 200 = c:rL1
-    | otherwise = rL1
+junta50(l1, l2) = maiores50(l1) ++ maiores50(l2)
 
-montaListas([], i, [], j, l50, l200) = (reverse(l50), reverse(l200))
-montaListas([], i, c2:l2, j, l50, l200) = montaListas([], i, l2, j+1, monta50(c2, j, l50), monta200(c2, j, l200))
-montaListas(c:l1, i, [], j, l50, l200) = montaListas(l1, i+1, [], j, monta50(c, i, l50), monta200(c, i, l200))
-montaListas(c:l1, i, c2:l2, j, l50, l200)
-    | c < c2 = montaListas(l1, i+1, c2:l2, j, monta50(c, i, l50), monta200(c, i, l200))
-    | c > c2 = montaListas(c:l1, i, l2, j+1, monta50(c2, j, l50), monta200(c2, j, l200))
-    | otherwise = montaListas(l1, i+1, l2, j+1, monta50(c, i, l50), monta200(c, i, l200))
+menores200(l) = [ x | x <- l, x < 200 && mod x 2 == 1 ]
 
-principalA(l1, l2) = montaListas(l1, 0, l2, 0, [], [])
+junta200(l1, l2) = menores200(l1) ++ menores200(l2)
+
+principalA(l1, l2) = (junta50(l1, l2), junta200(l1, l2))
 
 {-
     B) Devolva o produto dos elementos das duas listas dos múltiplos de 3 > 50 e dos múltiplos de 7 menores do que 200.
--}
+-} -- PERGUNTAR PRA ELA.
 
 -- SOMA de todos os produtos
 
-mult3(c, m3)
-    | c > 50 && mod c 3 == 0 = c * m3   -- se o elemento for maior que 50 e for multiplo de 3, multiplica
-    | otherwise = m3                    -- se não, retorna o valor atual.
+mult3(l) = [ x | x <- l, mod x 3 == 0 && x > 50 ]
 
+juntaM3(l1, l2) = mult3(l1) ++ mult3(l2)
 
-mult7(c, m7)
-    | c < 200 && mod c 7 == 0 = c * m7 -- se o elemento for menor que 200 e for multiplo de 7, multiplica
-    | otherwise = m7                   -- se não, retorna o valor atual.
+mult7(l) = [ x | x <- l, mod x 7 == 0 && x < 200 ]
 
+juntaM7(l1, l2) = mult7(l1) ++ mult7(l2)
 
-produto([], [], m3, m7) = (m3, m7)
-produto([], c2:l2, m3, m7) = produto([], l2, mult3(c2, m3), mult7(c2, m7))
-produto(c:l1, l2, m3, m7) = produto(l1, l2, mult3(c, m3), mult7(c, m7))
+produto(lista) = foldr (*) 1 lista
 
+principalB(l1, l2) = produto( juntaM3(l1, l2) ++ juntaM7(l1, l2) )
 
-principalB(l1, l2) = produto(l1, l2, 1, 1)
 
 {- 
     C) Devolva uma lista ordenada contendo elementos das duas listas que sejam maiores do que 50 e que sejam ímpares múltiplos de 3.
