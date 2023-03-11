@@ -8,4 +8,5 @@ Repositório destinado aos códigos em Haskell desenvolvidos para as atividades 
 - [Haskell Wiki](https://wiki.haskell.org/Haskell)
 - [Documentação](https://hackage.haskell.org/package/base-4.18.0.0/docs/Prelude.html#g:1)
 - [Else If](https://www.tutorialspoint.com/haskell/haskell_nested_if_else_statement.htm)
+- [Instalador no Windows](https://downloads.haskell.org/~platform/8.6.5/)
 
