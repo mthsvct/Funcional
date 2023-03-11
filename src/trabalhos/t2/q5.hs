@@ -32,10 +32,28 @@ lerCurso = do
     qntPeriodo <- getLine
     return (read codigo, nome, read qntPeriodo)
 
-gestaoLerCurso :: IO ()
-gestaoLerCurso = do
+{- gestaoLerCurso :: [Curso] -> IO [Curso] -}
+gestaoLerCurso lista = do
     curso <- lerCurso
     putStrLn ("Curso: " ++ show curso)
+    return (curso:lista)
+
+
+-- Função que apresenta os cursos cadastrados
+
+apresentaCursos :: [Curso] -> IO ()
+apresentaCursos [] = putStrLn " "
+apresentaCursos ((codigo, nome, qntPeriodo):t) = do
+    putStrLn ("Código do curso: " ++ show codigo)
+    putStrLn ("Nome do curso: " ++ nome)
+    putStrLn ("Quantidade de períodos: " ++ show qntPeriodo)
+    putStrLn " "
+    apresentaCursos t
+
+gestaoApresentaCursos :: [Curso] -> IO [Curso]
+gestaoApresentaCursos lista = do
+    apresentaCursos lista
+    return lista
 
 -- Função que lê um aluno pelo o teclado
 lerAluno :: IO Aluno
@@ -100,9 +118,10 @@ menu :: IO ()
 menu = do
     putStrLn "\nMenu"
     putStrLn "1 - Ler Curso"
-    putStrLn "2 - Ler Aluno"
-    putStrLn "3 - Ler Disciplina"
-    putStrLn "4 - Ler Notas"
+    putStrLn "2 - Apresentar Cursos"
+    putStrLn "3 - Ler Aluno"
+    putStrLn "4 - Ler Disciplina"
+    putStrLn "5 - Ler Notas"
     putStrLn "0 - Sair"
 
 -- Função que lê a opção do menu
@@ -115,27 +134,25 @@ lerOpcao = do
 
 -- Função que executa a opção do menu
 
-executarOpcao :: Int -> IO ()
-executarOpcao 1 = gestaoLerCurso
-executarOpcao 2 = gestaoLerAluno
-executarOpcao 3 = gestaoLerDisciplina
-executarOpcao 4 = gestaoLerNotas
-executarOpcao 0 = return ()
-executarOpcao _ = do
-    putStrLn "Opção inválida!"
-    menu
+executarOpcao :: (Int, [Curso]) -> IO [Curso]
+executarOpcao(1, lista) = gestaoLerCurso lista
+executarOpcao(2, lista) = gestaoApresentaCursos lista
+{- executarOpcao(2, lista) = gestaoLerAluno
+executarOpcao(3, lista) = gestaoLerDisciplina
+executarOpcao(4, lista) = gestaoLerNotas 
+executarOpcao(0, lista) = lista -}
+
 
 -- Função que executa o menu
-
-executarMenu :: IO ()
-executarMenu = do
+executarMenu :: [Curso] -> IO ()
+executarMenu cursos = do
     menu
     opcao <- lerOpcao
-    executarOpcao opcao
-    if opcao /= 5 then executarMenu else return ()
+    aux <- executarOpcao(opcao, cursos)
+    if opcao /= 5 then executarMenu aux else return ()
 
 -- Função principal
 
 main :: IO ()
 main = do
-    executarMenu
+    executarMenu []
