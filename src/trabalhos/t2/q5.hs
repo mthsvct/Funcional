@@ -100,6 +100,7 @@ lerAluno = do
 
 
 getCodCursoAluno((_, _, x, _)) = x
+getPeriodoAluno((_, _, _, x)) = x
 
 gestaoLerAluno :: [Aluno] -> [Curso] -> IO [Aluno]
 gestaoLerAluno alunos cursos = do
@@ -130,6 +131,21 @@ gestaoApresentaAlunos lista cursos = do
         putStrLn ("------------- ALUNOS CADASTRADOS ---------------")
         apresentaAlunos lista cursos
     return lista
+
+qntAlunosPorCurso([], []) = putStrLn " "
+qntAlunosPorCurso(c:qnts, c2:cursos) = do
+    putStrLn ("Quantidade de alunos no curso " ++ snd3(c2) ++ ": " ++ show c)
+    qntAlunosPorCurso(qnts, cursos)
+
+gestaoStaticsAlunos alunos cursos = do
+    let qntAlunos = length alunos
+    let qntAlunosCurso = [length [x | x <- alunos, getCodCursoAluno(x) == fst3(y)] | y <- cursos]
+    let qntAlunosPeriodo = [length [x | x <- alunos, getPeriodoAluno(x) == y] | y <- [1..12]]
+    putStrLn ("Quantidade de alunos cadastrados: " ++ show qntAlunos)
+    putStrLn " "
+    qntAlunosPorCurso(qntAlunosCurso, cursos)
+    putStrLn ("Quantidade de alunos por período: " ++ show qntAlunosPeriodo)
+    return alunos
 
 -- ----------------------------- DISCIPLINAS -----------------------------
 
@@ -185,9 +201,10 @@ menu = do
     putStrLn "1 - Ler Curso"
     putStrLn "2 - Apresentar Cursos"
     putStrLn "3 - Ler Aluno"
-    putStrLn "4 - Apresentar Alunos"
-    putStrLn "5 - Ler Disciplina"
-    putStrLn "6 - Ler Notas"
+    putStrLn "4 - Apresentar Estatisticas Alunos"
+    putStrLn "5 - Apresentar Alunos"
+    putStrLn "6 - Ler Disciplina"
+    putStrLn "7 - Ler Notas"
     putStrLn "0 - Sair"
 
 -- Função que lê a opção do menu
@@ -206,7 +223,8 @@ executarCurso(2, lista) = gestaoApresentaCursos lista
 
 executarAluno :: (Int, [Aluno], [Curso]) -> IO [Aluno]
 executarAluno(3, alunos, cursos) = gestaoLerAluno alunos cursos
-executarAluno(4, alunos, cursos) = gestaoApresentaAlunos alunos cursos
+executarAluno(4, alunos, cursos) = gestaoStaticsAlunos alunos cursos
+executarAluno(5, alunos, cursos) = gestaoApresentaAlunos alunos cursos
 
 
 -- Função que executa o menu
