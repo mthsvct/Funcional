@@ -1,5 +1,3 @@
-(1, "Matheus Victor", 1, 2)
-(2, "João Pedro", 1, 2)
-(3, "Bianca", 1, 2)
-(9, "Matheus Victor", 12, 8)
-(2, "Vinicius" , 9, 9)
+(1, "Matheus Victor", 1, 8)
+(2, "João Pedro", 2, 2)
+(3, "Bianca", 4, 3)

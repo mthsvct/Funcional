@@ -1,1 +1,2 @@
 (1, 2, "Engenharia de Software", 4)
+(2, 4, "Algoritmos", 4)

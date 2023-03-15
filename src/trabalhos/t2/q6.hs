@@ -105,9 +105,17 @@ lerCurso = do
 {- gestaoLerCurso :: [Curso] -> IO [Curso] -}
 gestaoLerCurso lista = do
     curso <- lerCurso
-    putStrLn ("Curso: " ++ show curso)
-    addCurso curso
-    return (curso:lista)
+
+    let aux = buscaCurso(lista, fst3(curso))
+
+    if (aux /= [])
+        then do
+            putStrLn "\nCurso já cadastrado\n"
+            gestaoLerCurso lista
+    else do 
+        addCurso curso        
+        return (curso:lista)
+
 
 
 -- Função que apresenta os cursos cadastrados
@@ -164,7 +172,14 @@ gestaoLerAluno alunos cursos = do
         then do
             putStrLn "\nCurso não cadastrado\nPor favor, digite um codigo valido!\n"
             gestaoLerAluno alunos cursos
-    else return (aluno:alunos)
+
+    else if (buscaAluno(alunos, fst4(aluno)) /= [])
+        then do
+            putStrLn "\nAluno já cadastrado\n"
+            gestaoLerAluno alunos cursos
+    else do
+        addAluno aluno
+        return (aluno:alunos)
             
 apresentaAlunos :: [Aluno] -> [Curso] -> IO ()
 apresentaAlunos [] cursos = putStrLn " "
@@ -255,6 +270,7 @@ lerDisciplina = do
     periodo <- getLine
     return (read codigo, read codigoCurso, nome, read periodo)
 
+getCodDisc((x, _, _, _)) = x
 getCodCursoDisciplina((_, x, _, _)) = x
 getNomeDisc((_, _, x, _)) = x
 getPeriodoDisciplina((_, _, _, x)) = x
@@ -269,8 +285,15 @@ gestaoLerDisciplina disciplinas cursos = do
         then do
             putStrLn "\nCurso não cadastrado\nPor favor, digite um codigo valido!\n"
             gestaoLerDisciplina disciplinas cursos
+    
+    else if (buscaDisciplina(getCodDisc(disciplina), disciplinas) /= [])
+        then do
+            putStrLn "\nDisciplina já cadastrada\n"
+            gestaoLerDisciplina disciplinas cursos
+    
     else do
         putStrLn ("Disciplina: " ++ show disciplina)
+        addDisciplina disciplina
         return (disciplina:disciplinas)
 
 
@@ -369,6 +392,7 @@ gestaoLerNotas notas alunos disciplinas cursos  = do
             gestaoLerNotas notas alunos disciplinas cursos
     else do
         putStrLn ("Notas: " ++ show notas)
+        addNotas nota
         return (nota:notas)
 
 apresentaNotas :: [Notas] -> [Aluno] -> [Disciplina] -> [Curso] -> IO ()
