@@ -88,6 +88,8 @@ buscaShowCurso(cursos, codigo) = do
         then apresentaCursos aux
     else putStrLn "Curso não cadastrado"
 
+getNomeCurso((_, x, _)) = x
+
 -- ----------------------------- ALUNOS ----------------------------- --
 lerAluno :: IO Aluno
 lerAluno = do
@@ -153,7 +155,44 @@ gestaoStaticsAlunos alunos cursos = do
     putStrLn ("Quantidade de alunos por período: " ++ show qntAlunosPeriodo)
     return alunos
 
+buscaAluno :: ([Aluno], Matricula) -> [Aluno]
 buscaAluno(alunos, matricula) = [x | x <- alunos, fst4(x) == matricula]
+
+alunosDoCurso :: ([Aluno], Codigo) -> [Aluno]
+alunosDoCurso(alunos, codCurso) = [x | x <- alunos, getCodCursoAluno(x) == codCurso]
+
+alunosDoPeriodo :: ([Aluno], Periodo) -> [Aluno]
+alunosDoPeriodo(alunos, periodo) = [x | x <- alunos, getPeriodoAluno(x) == periodo]
+
+apresentaAlusDoCurso :: ([Aluno], [Curso]) -> IO [Aluno]
+apresentaAlusDoCurso(alunos, cursos) = do
+    putStr "Digite o código do curso: "
+    cod <- getLine
+    let aux = alunosDoCurso(alunos, read cod)
+    let curso = buscaCurso(cursos, read cod)
+
+    putStrLn " "
+
+    if (aux == [])
+        then putStrLn "Não há alunos cadastrados nesse curso"
+    else do
+        putStrLn ("------------- " ++ show(length aux) ++ " ALUNOS DO CURSO " ++ getNomeCurso(curso !! 0) ++ ": ---------------")
+        apresentaAlunos aux cursos
+    
+    return alunos
+
+apresentaAlusDoPeriodo(alunos, cursos) = do
+    putStr "Digite o período: "
+    periodo <- getLine
+    let aux = alunosDoPeriodo(alunos, read periodo)
+
+    if (aux == [])
+        then putStrLn "Não há alunos cadastrados nesse período"
+    else do
+        putStrLn ("------------- " ++ show(length aux) ++ " ALUNOS DO PERÍODO " ++ periodo ++ ": ---------------")
+        apresentaAlunos aux cursos
+    
+    return alunos
 
 -- ----------------------------- DISCIPLINAS -----------------------------
 -- Função que lê uma disciplina pelo o teclado
@@ -172,6 +211,7 @@ lerDisciplina = do
 
 getCodCursoDisciplina((_, x, _, _)) = x
 getNomeDisc((_, _, x, _)) = x
+getPeriodoDisciplina((_, _, _, x)) = x
 
 {- gestaoLerDisciplina :: IO () -}
 gestaoLerDisciplina disciplinas cursos = do
@@ -208,6 +248,40 @@ gestaoApresentaDisciplina(disciplinas, cursos) = do
     return disciplinas
 
 buscaDisciplina(codigo, disciplinas) = [x | x <- disciplinas, fst4(x) == codigo]
+
+disciDoCurso(codCurso, disciplinas) = [x | x <- disciplinas, getCodCursoDisciplina(x) == codCurso]
+
+disciDoPeriodo(periodo, disciplinas) = [x | x <- disciplinas, getPeriodoDisciplina(x) == periodo]
+
+apresentaDisciDoCurso(disciplinas, cursos) = do
+    putStr "Digite o código do curso: "
+    cod <- getLine
+    let aux = disciDoCurso(read cod, disciplinas)
+    let curso = buscaCurso(cursos, read cod)
+
+    putStrLn " "
+
+    if (aux == [])
+        then putStrLn "Não há disciplinas cadastradas nesse curso"
+    else do
+        putStrLn ("------------- " ++ show(length aux) ++ " DISCIPLINAS DO CURSO " ++ getNomeCurso(curso !! 0) ++ ": ---------------")
+        apresentaDisciplinas aux cursos
+    
+    return disciplinas
+
+apresentaDisciDoPeriodo(disciplinas, cursos) = do
+    putStr "Digite o período: "
+    periodo <- getLine
+    let aux = disciDoPeriodo(read periodo, disciplinas)
+
+    if (aux == [])
+        then putStrLn "Não há disciplinas cadastradas nesse período"
+    else do
+        putStrLn ("------------- " ++ show(length aux) ++ " DISCIPLINAS DO PERÍODO " ++ periodo ++ ": ---------------")
+        apresentaDisciplinas aux cursos
+    
+    return disciplinas
+
 
 -- ----------------------------- NOTAS ----------------------------- --
 
@@ -291,6 +365,9 @@ menu = do
     putStrLn "7 - Apresentar Disciplinas"
     putStrLn "8 - Ler Notas"
     putStrLn "9 - Apresentar Notas"
+    putStrLn "10 - Apresentar Alunos de um curso"
+    putStrLn "11 - Apresentar Alunos de um periodo"
+    putStrLn "12 - Apresentar disciplinas de um curso"
     putStrLn "0 - Sair"
 
 -- Função que lê a opção do menu
@@ -311,14 +388,22 @@ executarAluno :: (Int, [Aluno], [Curso]) -> IO [Aluno]
 executarAluno(3, alunos, cursos) = gestaoLerAluno alunos cursos
 executarAluno(4, alunos, cursos) = gestaoStaticsAlunos alunos cursos
 executarAluno(5, alunos, cursos) = gestaoApresentaAlunos alunos cursos
+executarAluno(10, alunos, cursos) = apresentaAlusDoCurso(alunos, cursos)
+executarAluno(11, alunos, cursos) = apresentaAlusDoPeriodo(alunos, cursos)
 
 executarDisciplina :: (Int, [Disciplina], [Curso]) -> IO [Disciplina]
 executarDisciplina(6, disciplinas, cursos) = gestaoLerDisciplina disciplinas cursos
 executarDisciplina(7, disciplinas, cursos) = gestaoApresentaDisciplina(disciplinas, cursos)
+executarDisciplina(12, disciplinas, cursos) = apresentaDisciDoCurso(disciplinas, cursos)
+executarDisciplina(13, disciplinas, cursos) = apresentaDisciDoPeriodo(disciplinas, cursos)
+
 
 executarNotas :: (Int, [Notas], [Aluno], [Disciplina], [Curso]) -> IO [Notas]
 executarNotas(8, notas, alunos, disciplinas, cursos) = gestaoLerNotas notas alunos disciplinas cursos
 executarNotas(9, notas, alunos, disciplinas, cursos) = gestaoApresentaNotas notas alunos disciplinas cursos
+
+
+
 
 -- Função que executa o menu
 executarMenu :: [Curso] -> [Aluno] -> [Disciplina] -> [Notas] -> IO ()
@@ -333,15 +418,24 @@ executarMenu cursos alunos disciplinas notas = do
         aux2 <- executarAluno(opcao, alunos, cursos)
         executarMenu cursos aux2 disciplinas notas
 
-    else if opcao == 6 || opcao == 7 then do
+    else if opcao == 6 || opcao == 7 || opcao == 12 || opcao == 13 then do
         aux3 <- executarDisciplina(opcao, disciplinas, cursos)
         executarMenu cursos alunos aux3 notas
     
     else if opcao == 8 || opcao == 9 then do
         aux4 <- executarNotas(opcao, notas, alunos, disciplinas, cursos)
         executarMenu cursos alunos disciplinas aux4
-        
-    else return ()
+    
+    else if opcao == 10 || opcao == 11 then do
+        aux5 <- executarAluno(opcao, alunos, cursos)
+        executarMenu cursos alunos disciplinas notas
+
+
+    else if opcao == 0 then do return ()
+
+    else do
+        putStrLn "Opção inválida"
+        executarMenu cursos alunos disciplinas notas
 
 -- Função principal
 
