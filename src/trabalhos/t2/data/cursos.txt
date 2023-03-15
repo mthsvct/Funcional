@@ -1,3 +1,4 @@
 (1, "Ciencia da Computacaoo", 10)
 (2, "Engenharia de Software", 8)
 (3, "Engenharia de Computacao", 5)
+(5, "Sistemas de Informacao", 6)

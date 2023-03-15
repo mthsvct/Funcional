@@ -36,7 +36,7 @@ abrirCursos = do
     return cursos
 
 addCurso((codigo, nome, qntPeriodo))= do
-    let novo = "(" ++ show codigo ++ ", " ++ nome ++ ", " ++ show qntPeriodo ++ ")\n"
+    let novo = "(" ++ show codigo ++ ", \"" ++ nome ++ "\", " ++ show qntPeriodo ++ ")\n"
     appendFile arqCursos novo
 
 -- ------------------------------ DISCIPLINAS ------------------------------ --
@@ -48,7 +48,7 @@ abrirDisciplinas = do
     return disciplinas
 
 addDisciplina((codigo, codigoCurso, nome, periodo))= do
-    let novo = "(" ++ show codigo ++ ", " ++ show codigoCurso ++ ", " ++ nome ++ ", " ++ show periodo ++ ")\n"
+    let novo = "(" ++ show codigo ++ ", " ++ show codigoCurso ++ ", \"" ++ nome ++ "\", " ++ show periodo ++ ")\n"
     appendFile arqDisciplinas novo
 
 -- ------------------------------ NOTAS ------------------------------ --
@@ -106,6 +106,7 @@ lerCurso = do
 gestaoLerCurso lista = do
     curso <- lerCurso
     putStrLn ("Curso: " ++ show curso)
+    addCurso curso
     return (curso:lista)
 
 
