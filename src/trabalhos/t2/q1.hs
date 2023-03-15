@@ -10,7 +10,7 @@ ehVogal(c)
         | c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' = 1
         | otherwise = 0
 
-contabiliza(lista) = [ ( c, sum([ehVogal(x) | x <- c]) ) | c <- lista ]
+contabiliza(lista) = [ ( string, sum([ehVogal(x) | x <- string] ) ) | string <- lista ]
 
 apresentaA([], count) = do
         putStr "\nTotal de vogais em todas as strings: "
@@ -23,7 +23,12 @@ apresentaA((c, n):r, count) = do
         putStrLn " vogais."
         apresentaA(r, count+n)
 
-principalA(lista) = apresentaA(contabiliza(lista), 0)
+principalA(lista) = do
+        let aux = contabiliza(lista)
+        putStrLn "\nA lista de tuplas eh: "
+        putStrLn (show aux)
+        putStrLn " "
+        apresentaA(contabiliza(lista), 0)
 
 -- --------------------------------------------------------------------------------
 -- B) devolva uma lista string contendo as strings que seu tamanho seja maior do que 5 e que inicie com vogais. Exemplo: ["abacate", "banana", "uva"] -> ["abacate"].
