@@ -349,6 +349,28 @@ gestaoApresentaNotas notas alunos disciplinas cursos = do
     return notas
 
 
+buscaNotaAluno(matricula, notas) = [x | x <- notas, fst4(x) == matricula]
+
+apresentaNotasAluno :: (Matricula, [Notas], [Aluno], [Disciplina], [Curso]) -> IO ()
+apresentaNotasAluno(matricula, notas, alunos, disciplinas, cursos) = do
+    let aux = buscaNotaAluno(matricula, notas)
+    if (aux == [])
+        then putStrLn "Não há notas cadastradas para esse aluno"
+    else do
+        putStrLn ("------------- " ++ show(length aux) ++ " NOTAS DO ALUNO " ++ show matricula ++ ": ---------------")
+        apresentaNotas aux alunos disciplinas cursos
+
+gestaoApresentaNotasAluno notas alunos disciplinas cursos = do
+    putStr "Digite a matrícula do aluno: "
+    matricula <- getLine
+    let aux = buscaAluno(alunos, read matricula)
+    if (aux == [])
+        then putStrLn "Aluno não cadastrado"
+    else do
+        apresentaNotasAluno(read matricula, notas, alunos, disciplinas, cursos)
+    return notas
+
+
 -- ----------------------------- MENU ----------------------------- --
 
 -- Função menu que mostra as opções do programa
@@ -368,6 +390,8 @@ menu = do
     putStrLn "10 - Apresentar Alunos de um curso"
     putStrLn "11 - Apresentar Alunos de um periodo"
     putStrLn "12 - Apresentar disciplinas de um curso"
+    putStrLn "13 - Apresentar disciplinas de um periodo"
+    putStrLn "14 - Apresentar notas de um aluno"
     putStrLn "0 - Sair"
 
 -- Função que lê a opção do menu
@@ -379,7 +403,6 @@ lerOpcao = do
     return (read opcao)
 
 -- Função que executa a opção do menu
-
 executarCurso :: (Int, [Curso]) -> IO [Curso]
 executarCurso(1, lista) = gestaoLerCurso lista
 executarCurso(2, lista) = gestaoApresentaCursos lista
@@ -397,13 +420,10 @@ executarDisciplina(7, disciplinas, cursos) = gestaoApresentaDisciplina(disciplin
 executarDisciplina(12, disciplinas, cursos) = apresentaDisciDoCurso(disciplinas, cursos)
 executarDisciplina(13, disciplinas, cursos) = apresentaDisciDoPeriodo(disciplinas, cursos)
 
-
 executarNotas :: (Int, [Notas], [Aluno], [Disciplina], [Curso]) -> IO [Notas]
 executarNotas(8, notas, alunos, disciplinas, cursos) = gestaoLerNotas notas alunos disciplinas cursos
 executarNotas(9, notas, alunos, disciplinas, cursos) = gestaoApresentaNotas notas alunos disciplinas cursos
-
-
-
+executarNotas(14, notas, alunos, disciplinas, cursos) = gestaoApresentaNotasAluno notas alunos disciplinas cursos 
 
 -- Função que executa o menu
 executarMenu :: [Curso] -> [Aluno] -> [Disciplina] -> [Notas] -> IO ()
@@ -422,7 +442,7 @@ executarMenu cursos alunos disciplinas notas = do
         aux3 <- executarDisciplina(opcao, disciplinas, cursos)
         executarMenu cursos alunos aux3 notas
     
-    else if opcao == 8 || opcao == 9 then do
+    else if opcao == 8 || opcao == 9 || opcao == 14 then do
         aux4 <- executarNotas(opcao, notas, alunos, disciplinas, cursos)
         executarMenu cursos alunos disciplinas aux4
     
