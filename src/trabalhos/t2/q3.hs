@@ -7,14 +7,19 @@ module Q3_trab2 where
 -- A) devolva duas listas, a primeira contendo os números das posições pares maiores do que 50 
 -- e a segunda os elementos ímpares menores que 200.
 
+maiores50 :: [Int] -> [Int]
 maiores50(l) = [ l !! p | p <- [0,2.. (length(l)-1) ], l !! p > 50 ]
 
+junta50 :: ([Int], [Int]) -> [Int]
 junta50(l1, l2) = maiores50(l1) ++ maiores50(l2)
 
+menores200 :: [Int] -> [Int]
 menores200(l) = [ x | x <- l, x < 200 && mod x 2 == 1 ]
 
+junta200 :: ([Int], [Int]) -> [Int]
 junta200(l1, l2) = menores200(l1) ++ menores200(l2)
 
+principalA :: ([Int], [Int]) -> ([Int], [Int])
 principalA(l1, l2) = (junta50(l1, l2), junta200(l1, l2))
 
 {-
@@ -23,16 +28,22 @@ principalA(l1, l2) = (junta50(l1, l2), junta200(l1, l2))
 
 -- SOMA de todos os produtos
 
+mult3 :: [Int] -> [Int]
 mult3(l) = [ x | x <- l, mod x 3 == 0 && x > 50 ]
 
+juntaM3 :: ([Int], [Int]) -> [Int]
 juntaM3(l1, l2) = mult3(l1) ++ mult3(l2)
 
+mult7 :: [Int] -> [Int]
 mult7(l) = [ x | x <- l, mod x 7 == 0 && x < 200 ]
 
+juntaM7 :: ([Int], [Int]) -> [Int]
 juntaM7(l1, l2) = mult7(l1) ++ mult7(l2)
 
+produto :: [Int] -> Int
 produto(lista) = foldr (*) 1 lista
 
+principalB :: ([Int], [Int]) -> Int
 principalB(l1, l2) = produto( juntaM3(l1, l2) ++ juntaM7(l1, l2) )
 
 
@@ -42,12 +53,14 @@ principalB(l1, l2) = produto( juntaM3(l1, l2) ++ juntaM7(l1, l2) )
 -}
 
 -- Função quicksort
+quicksort :: [Int] -> [Int]
 quicksort [] = []
 quicksort (x:xs) = quicksort [y | y <- xs, y <= x] ++ [x] ++ quicksort [y | y <- xs, y > x]
 
 
 {- 2ª forma de fazer a C: -}
-
+m50 :: [Int] -> [Int]
 m50(lista) = [ x | x <- lista, x > 50 && mod x 2 == 1 && mod x 3 == 0 ]
 
+principalC :: ([Int], [Int]) -> [Int]
 principalC(l1, l2) = quicksort(m50(l1) ++ m50(l2))
