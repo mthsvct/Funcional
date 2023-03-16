@@ -7,7 +7,7 @@ module Q3_trab2 where
 -- A) devolva duas listas, a primeira contendo os números das posições pares maiores do que 50 
 -- e a segunda os elementos ímpares menores que 200.
 
-maiores50(l) = [ l !! p | p <- [0,2.. length(l) ], l !! p > 50 ]
+maiores50(l) = [ l !! p | p <- [0,2.. (length(l)-1) ], l !! p > 50 ]
 
 junta50(l1, l2) = maiores50(l1) ++ maiores50(l2)
 

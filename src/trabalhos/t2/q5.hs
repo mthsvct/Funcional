@@ -151,7 +151,7 @@ qntAlunosPorCurso(c:qnts, c2:cursos) = do
     putStrLn ("Quantidade de alunos no curso " ++ snd3(c2) ++ ": " ++ show c)
     qntAlunosPorCurso(qnts, cursos)
 
-gestaoStaticsAlunos alunos cursos = do
+alunos cursos = do
     let qntAlunos = length alunos
     let qntAlunosCurso = [length [x | x <- alunos, getCodCursoAluno(x) == fst3(y)] | y <- cursos]
     let qntAlunosPeriodo = [length [x | x <- alunos, getPeriodoAluno(x) == y] | y <- [1..12]]

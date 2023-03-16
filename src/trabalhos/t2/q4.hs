@@ -79,7 +79,7 @@ especifico(t) = do
 
 -- --------------------------- FUNÇÕES DO MENU ------------------------- --
 
-erro = putStrLn "KRIE VERGONHA NA CARA, digite um valor valido!"
+erro = putStrLn "Digite um valor valido!"
 
 encerra = putStrLn "Programa encerrado! \n"
 
