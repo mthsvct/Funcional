@@ -60,9 +60,12 @@ lerCurso = do
 {- gestaoLerCurso :: [Curso] -> IO [Curso] -}
 gestaoLerCurso lista = do
     curso <- lerCurso
-    putStrLn ("Curso: " ++ show curso)
-    return (curso:lista)
-
+    let aux = buscaCurso(lista, fst3(curso))
+    if (aux /= [])
+        then do
+            putStrLn "\nCurso já cadastrado\n"
+            gestaoLerCurso lista
+    else return (curso:lista)
 
 -- Função que apresenta os cursos cadastrados
 apresentaCursos :: [Curso] -> IO ()
@@ -103,11 +106,10 @@ lerAluno = do
     periodo <- getLine
     return (read matricula, nome, read codigo, read periodo)
 
-
+getMatriculaAluno((x, _, _, _)) = x
 getNomeAluno((_, x, _, _)) = x
 getCodCursoAluno((_, _, x, _)) = x
 getPeriodoAluno((_, _, _, x)) = x
-
 
 gestaoLerAluno :: [Aluno] -> [Curso] -> IO [Aluno]
 gestaoLerAluno alunos cursos = do
@@ -118,8 +120,12 @@ gestaoLerAluno alunos cursos = do
         then do
             putStrLn "\nCurso não cadastrado\nPor favor, digite um codigo valido!\n"
             gestaoLerAluno alunos cursos
+    else if (buscaAluno(alunos, getMatriculaAluno(aluno)) /= [])
+        then do
+            putStrLn "\nAluno já cadastrado\n"
+            gestaoLerAluno alunos cursos
     else return (aluno:alunos)
-            
+
 apresentaAlunos :: [Aluno] -> [Curso] -> IO ()
 apresentaAlunos [] cursos = putStrLn " "
 apresentaAlunos ((matricula, nome, codigo, periodo):t) cursos = do
@@ -209,6 +215,7 @@ lerDisciplina = do
     periodo <- getLine
     return (read codigo, read codigoCurso, nome, read periodo)
 
+getCodDisc((x, _, _, _)) = x
 getCodCursoDisciplina((_, x, _, _)) = x
 getNomeDisc((_, _, x, _)) = x
 getPeriodoDisciplina((_, _, _, x)) = x
@@ -223,9 +230,13 @@ gestaoLerDisciplina disciplinas cursos = do
         then do
             putStrLn "\nCurso não cadastrado\nPor favor, digite um codigo valido!\n"
             gestaoLerDisciplina disciplinas cursos
-    else do
-        putStrLn ("Disciplina: " ++ show disciplina)
-        return (disciplina:disciplinas)
+    
+    else if (buscaDisciplina(getCodDisc(disciplina), disciplinas) /= [])
+        then do
+            putStrLn "\nDisciplina já cadastrada\n"
+            gestaoLerDisciplina disciplinas cursos
+    
+    else return (disciplina:disciplinas)
 
 
 apresentaDisciplinas [] cursos = putStrLn " "
@@ -321,9 +332,7 @@ gestaoLerNotas notas alunos disciplinas cursos  = do
         then do
             putStrLn "\nDisciplina não cadastrada\nPor favor, digite um codigo valido!\n"
             gestaoLerNotas notas alunos disciplinas cursos
-    else do
-        putStrLn ("Notas: " ++ show notas)
-        return (nota:notas)
+    else return (nota:notas)
 
 apresentaNotas :: [Notas] -> [Aluno] -> [Disciplina] -> [Curso] -> IO ()
 apresentaNotas [] alunos disciplinas cursos = putStrLn " "

@@ -116,8 +116,6 @@ gestaoLerCurso lista = do
         addCurso curso        
         return (curso:lista)
 
-
-
 -- Função que apresenta os cursos cadastrados
 apresentaCursos :: [Curso] -> IO ()
 apresentaCursos [] = putStrLn " "
@@ -448,21 +446,21 @@ gestaoApresentaNotasAluno notas alunos disciplinas cursos = do
 menu :: IO ()
 menu = do
     putStrLn "\nMenu"
-    putStrLn "1 - Ler Curso"
-    putStrLn "2 - Apresentar Cursos"
-    putStrLn "3 - Ler Aluno"
-    putStrLn "4 - Apresentar Estatisticas Alunos"
-    putStrLn "5 - Apresentar Alunos"
-    putStrLn "6 - Ler Disciplina"
-    putStrLn "7 - Apresentar Disciplinas"
-    putStrLn "8 - Ler Notas"
-    putStrLn "9 - Apresentar Notas"
+    putStrLn " 1 - Ler Curso"
+    putStrLn " 2 - Apresentar Cursos"
+    putStrLn " 3 - Ler Aluno"
+    putStrLn " 4 - Apresentar Estatisticas Alunos"
+    putStrLn " 5 - Apresentar Alunos"
+    putStrLn " 6  - Ler Disciplina"
+    putStrLn " 7 - Apresentar Disciplinas"
+    putStrLn " 8 - Ler Notas"
+    putStrLn " 9 - Apresentar Notas"
     putStrLn "10 - Apresentar Alunos de um curso"
     putStrLn "11 - Apresentar Alunos de um periodo"
     putStrLn "12 - Apresentar disciplinas de um curso"
     putStrLn "13 - Apresentar disciplinas de um periodo"
     putStrLn "14 - Apresentar notas de um aluno"
-    putStrLn "0 - Sair"
+    putStrLn " 0 - Sair"
 
 -- Função que lê a opção do menu
 lerOpcao :: IO Int
@@ -520,7 +518,6 @@ executarMenu cursos alunos disciplinas notas = do
         aux5 <- executarAluno(opcao, alunos, cursos)
         executarMenu cursos alunos disciplinas notas
 
-
     else if opcao == 0 then do return ()
 
     else do
@@ -532,11 +529,5 @@ main = do
     cursos <- abrirCursos
     disciplinas <- abrirDisciplinas
     notas <- abrirNotas
-    
-    print alunos
-    print cursos
-    print disciplinas
-    print notas
 
-    executarMenu cursos alunos disciplinas notas
-    
+    executarMenu cursos alunos disciplinas notas 
