@@ -12,9 +12,16 @@ type Aluno = (Matricula, Nome, Codigo, Periodo)
 type Disciplina = (Codigo, Codigo, Nome, Periodo)
 type Notas = (Matricula, Codigo, Nota, Nota)
 
+arqAlunos :: String
 arqAlunos = "data/alunos.txt"
+
+arqCursos :: String
 arqCursos = "data/cursos.txt"
+
+arqDisciplinas :: String
 arqDisciplinas = "data/disciplinas.txt"
+
+arqNotas :: String
 arqNotas = "data/notas.txt"
 
 abrirAlunos :: IO [Aluno]
@@ -23,6 +30,7 @@ abrirAlunos = do
     let alunos = map read (lines conteudo) :: [Aluno]
     return alunos
 
+addAluno :: (Int, String, Int, Int) -> IO()
 addAluno((matricula, nome, codigo, periodo))= do
     let novo = "(" ++ show matricula ++ ", \"" ++ nome ++ "\" , " ++ show codigo ++ ", " ++ show periodo ++ ")\n"
     appendFile arqAlunos novo
@@ -35,6 +43,7 @@ abrirCursos = do
     let cursos = map read (lines conteudo) :: [Curso]
     return cursos
 
+addCurso :: (Int, String, Int) -> IO()
 addCurso((codigo, nome, qntPeriodo))= do
     let novo = "(" ++ show codigo ++ ", \"" ++ nome ++ "\", " ++ show qntPeriodo ++ ")\n"
     appendFile arqCursos novo
@@ -47,6 +56,7 @@ abrirDisciplinas = do
     let disciplinas = map read (lines conteudo) :: [Disciplina]
     return disciplinas
 
+addDisciplina :: (Int, Int, String, Int) -> IO()
 addDisciplina((codigo, codigoCurso, nome, periodo))= do
     let novo = "(" ++ show codigo ++ ", " ++ show codigoCurso ++ ", \"" ++ nome ++ "\", " ++ show periodo ++ ")\n"
     appendFile arqDisciplinas novo
@@ -59,6 +69,7 @@ abrirNotas = do
     let notas = map read (lines conteudo) :: [Notas]
     return notas
 
+addNotas :: (Int, Int, Float, Float) -> IO()
 addNotas((matricula, codigo, nota1, nota2))= do
     let novo = "(" ++ show matricula ++ ", " ++ show codigo ++ ", " ++ show nota1 ++ ", " ++ show nota2 ++ ")\n"
     appendFile arqNotas novo
@@ -102,7 +113,7 @@ lerCurso = do
     qntPeriodo <- getLine
     return (read codigo, nome, read qntPeriodo)
 
-{- gestaoLerCurso :: [Curso] -> IO [Curso] -}
+gestaoLerCurso :: [Curso] -> IO [Curso]
 gestaoLerCurso lista = do
     curso <- lerCurso
 
@@ -155,11 +166,17 @@ lerAluno = do
     periodo <- getLine
     return (read matricula, nome, read codigo, read periodo)
 
+getMatriculaAluno :: Aluno -> Matricula
+getMatriculaAluno((x, _, _, _)) = x
 
+getNomeAluno :: Aluno -> Nome
 getNomeAluno((_, x, _, _)) = x
-getCodCursoAluno((_, _, x, _)) = x
-getPeriodoAluno((_, _, _, x)) = x
 
+getCodCursoAluno :: Aluno -> Codigo
+getCodCursoAluno((_, _, x, _)) = x
+
+getPeriodoAluno :: Aluno -> Periodo
+getPeriodoAluno((_, _, _, x)) = x
 
 gestaoLerAluno :: [Aluno] -> [Curso] -> IO [Aluno]
 gestaoLerAluno alunos cursos = do
@@ -198,12 +215,13 @@ gestaoApresentaAlunos lista cursos = do
         apresentaAlunos lista cursos
     return lista
 
-
+qntAlunosPorCurso :: ([Int], [Curso]) -> IO ()
 qntAlunosPorCurso([], []) = putStrLn " "
 qntAlunosPorCurso(c:qnts, c2:cursos) = do
     putStrLn ("Quantidade de alunos no curso " ++ snd3(c2) ++ ": " ++ show c)
     qntAlunosPorCurso(qnts, cursos)
 
+gestaoStaticsAlunos :: [Aluno] -> [Curso] -> IO [Aluno]
 gestaoStaticsAlunos alunos cursos = do
     let qntAlunos = length alunos
     let qntAlunosCurso = [length [x | x <- alunos, getCodCursoAluno(x) == fst3(y)] | y <- cursos]
@@ -240,6 +258,7 @@ apresentaAlusDoCurso(alunos, cursos) = do
     
     return alunos
 
+apresentaAlusDoPeriodo :: ([Aluno], [Curso]) -> IO [Aluno]
 apresentaAlusDoPeriodo(alunos, cursos) = do
     putStr "Digite o período: "
     periodo <- getLine
@@ -268,12 +287,19 @@ lerDisciplina = do
     periodo <- getLine
     return (read codigo, read codigoCurso, nome, read periodo)
 
+getCodDisc :: Disciplina -> Codigo
 getCodDisc((x, _, _, _)) = x
+
+getCodCursoDisciplina :: Disciplina -> Codigo
 getCodCursoDisciplina((_, x, _, _)) = x
+
+getNomeDisc :: Disciplina -> Nome
 getNomeDisc((_, _, x, _)) = x
+
+getPeriodoDisciplina :: Disciplina -> Periodo
 getPeriodoDisciplina((_, _, _, x)) = x
 
-{- gestaoLerDisciplina :: IO () -}
+gestaoLerDisciplina :: [Disciplina] -> [Curso] -> IO [Disciplina]
 gestaoLerDisciplina disciplinas cursos = do
     disciplina <- lerDisciplina
     let cod = getCodCursoDisciplina(disciplina)
@@ -283,18 +309,16 @@ gestaoLerDisciplina disciplinas cursos = do
         then do
             putStrLn "\nCurso não cadastrado\nPor favor, digite um codigo valido!\n"
             gestaoLerDisciplina disciplinas cursos
-    
     else if (buscaDisciplina(getCodDisc(disciplina), disciplinas) /= [])
         then do
             putStrLn "\nDisciplina já cadastrada\n"
             gestaoLerDisciplina disciplinas cursos
-    
     else do
         putStrLn ("Disciplina: " ++ show disciplina)
         addDisciplina disciplina
         return (disciplina:disciplinas)
 
-
+apresentaDisciplinas :: [Disciplina] -> [Curso] -> IO ()
 apresentaDisciplinas [] cursos = putStrLn " "
 apresentaDisciplinas ((codigo, codigoCurso, nome, periodo):t) cursos = do
     let c = buscaCurso(cursos, codigoCurso)
@@ -305,7 +329,7 @@ apresentaDisciplinas ((codigo, codigoCurso, nome, periodo):t) cursos = do
     putStrLn " "
     apresentaDisciplinas t cursos
 
-
+gestaoApresentaDisciplina :: ([Disciplina], [Curso]) -> IO [Disciplina]
 gestaoApresentaDisciplina(disciplinas, cursos) = do
     if (disciplinas == [])
         then putStrLn "Não há disciplinas cadastradas"
@@ -314,12 +338,16 @@ gestaoApresentaDisciplina(disciplinas, cursos) = do
         apresentaDisciplinas disciplinas cursos
     return disciplinas
 
+buscaDisciplina :: (Codigo, [Disciplina]) -> [Disciplina]
 buscaDisciplina(codigo, disciplinas) = [x | x <- disciplinas, fst4(x) == codigo]
 
+disciDoCurso :: (Codigo, [Disciplina]) -> [Disciplina]
 disciDoCurso(codCurso, disciplinas) = [x | x <- disciplinas, getCodCursoDisciplina(x) == codCurso]
 
+disciDoPeriodo :: (Periodo, [Disciplina]) -> [Disciplina]
 disciDoPeriodo(periodo, disciplinas) = [x | x <- disciplinas, getPeriodoDisciplina(x) == periodo]
 
+apresentaDisciDoCurso :: ([Disciplina], [Curso]) -> IO [Disciplina]
 apresentaDisciDoCurso(disciplinas, cursos) = do
     putStr "Digite o código do curso: "
     cod <- getLine
@@ -336,6 +364,7 @@ apresentaDisciDoCurso(disciplinas, cursos) = do
     
     return disciplinas
 
+apresentaDisciDoPeriodo :: ([Disciplina], [Curso]) -> IO [Disciplina]
 apresentaDisciDoPeriodo(disciplinas, cursos) = do
     putStr "Digite o período: "
     periodo <- getLine
@@ -374,7 +403,7 @@ lerNotas = do
     else do
         return (read matricula, read codigo, read nota1, -1)
 
-{- gestaoLerNotas :: IO () -}
+gestaoLerNotas :: [Notas] -> [Aluno] -> [Disciplina] -> [Curso] -> IO [Notas]
 gestaoLerNotas notas alunos disciplinas cursos  = do
     nota <- lerNotas
     let aux = buscaAluno(alunos, fst4(nota))
@@ -416,7 +445,7 @@ gestaoApresentaNotas notas alunos disciplinas cursos = do
         apresentaNotas notas alunos disciplinas cursos
     return notas
 
-
+buscaNotaAluno :: (Matricula, [Notas]) -> [Notas]
 buscaNotaAluno(matricula, notas) = [x | x <- notas, fst4(x) == matricula]
 
 apresentaNotasAluno :: (Matricula, [Notas], [Aluno], [Disciplina], [Curso]) -> IO ()
@@ -428,6 +457,7 @@ apresentaNotasAluno(matricula, notas, alunos, disciplinas, cursos) = do
         putStrLn ("------------- " ++ show(length aux) ++ " NOTAS DO ALUNO " ++ show matricula ++ ": ---------------")
         apresentaNotas aux alunos disciplinas cursos
 
+gestaoApresentaNotasAluno :: [Notas] -> [Aluno] -> [Disciplina] -> [Curso] -> IO [Notas]
 gestaoApresentaNotasAluno notas alunos disciplinas cursos = do
     putStr "Digite a matrícula do aluno: "
     matricula <- getLine
@@ -523,7 +553,8 @@ executarMenu cursos alunos disciplinas notas = do
     else do
         putStrLn "Opção inválida"
         executarMenu cursos alunos disciplinas notas
-   
+
+main :: IO ()
 main = do
     alunos <- abrirAlunos
     cursos <- abrirCursos
