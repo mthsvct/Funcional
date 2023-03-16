@@ -10,9 +10,6 @@ separa(lista) = [c | c <- lista, length c >= 4]
 
 junta(lista1, lista2) = separa(lista1) ++ separa(lista2)
 
-
-length
-
 -- so ordena no final 
 quicksortListaStringAlfabetica [] = []
 quicksortListaStringAlfabetica (c:r) = quicksortListaStringAlfabetica [a | a <- r, a < c] ++ [c] ++ quicksortListaStringAlfabetica [a | a <- r, a >= c]

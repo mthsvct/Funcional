@@ -50,4 +50,4 @@ quicksort (x:xs) = quicksort [y | y <- xs, y <= x] ++ [x] ++ quicksort [y | y <-
 
 m50(lista) = [ x | x <- lista, x > 50 && mod x 2 == 1 && mod x 3 == 0 ]
 
-principalC_2(l1, l2) = quicksort(m50(l1) ++ m50(l2))
+principalC(l1, l2) = quicksort(m50(l1) ++ m50(l2))
