@@ -51,7 +51,7 @@ apresentaB(lista) = do
         putStrLn "As strings que iniciam com vogal e tem mais de 5 caracteres sao: "
         mostraS(lista, 1)
 
--- length = tamanho: lenght(["Matheus", "Victor", "Outra String"]) == 3. lenght([1,3,5,7,9]) == 5.
+-- length = tamanho. Ex: length("abacate") = 7
 -- head   = retorna a cabeça (1º item) da lista
 compara :: [String] -> [String]
 compara(lista) = [x | x <- lista, (ehVogal(head x) == 1) && (length(x) > 5)]
