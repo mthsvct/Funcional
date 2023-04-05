@@ -17,6 +17,6 @@ divs n = [c | c <- [1..n], mod n c == 0]
 primo n = divs n == [1,n]
 
 -- Se for primo retorne 1 sem usar pipe
-divisores n = length [ c | c <- [1.. (div n 2)], mod n c == 0]
+{- divisores n = length [ c | c <- [1.. (div n 2)], mod n c == 0]
 
-primo n = if divisores n == 1 then 1 else 0
+primo n = if divisores n == 1 then 1 else 0 -}

@@ -30,6 +30,8 @@ abrirAlunos = do
     let alunos = map read (lines conteudo) :: [Aluno]
     return alunos
 
+
+
 addAluno :: (Int, String, Int, Int) -> IO()
 addAluno((matricula, nome, codigo, periodo))= do
     let novo = "(" ++ show matricula ++ ", \"" ++ nome ++ "\" , " ++ show codigo ++ ", " ++ show periodo ++ ")\n"
